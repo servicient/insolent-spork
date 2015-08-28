@@ -1,10 +1,10 @@
 {
-  "name": "material-ui-example",
+  "name": "insolent-spork",
   "version": "0.8.0",
   "description": "Sample project that uses material-ui",
   "repository": {
     "type": "git",
-    "url": "https://github.com/callemall/material-ui.git"
+    "url": "https://github.com/servicient/insolent-spork"
   },
   "scripts": {
     "start": "webpack-dev-server --config webpack-dev-server.config.js --progress --inline --colors",
