@@ -58,6 +58,8 @@ let Main = React.createClass({
 
       <div className="container" style={containerStyle}>
 
+        <img src={require('../images/logo.png')} />
+        
         <Dialog
           title="Add Client"
           actions={standardActions}
