@@ -15,6 +15,8 @@ let {
   FlatButton,
   RaisedButton,
   TextField,
+  IconButton,
+  FontIcon,
 } = mui;
 let ThemeManager = new mui.Styles.ThemeManager();
 let Colors = mui.Styles.Colors;
@@ -36,31 +38,33 @@ let Main = React.createClass({
 
   componentWillMount() {
     ThemeManager.setPalette({
-      accent1Color: Colors.deepOrange500,
+      accent1Color: Colors.blue900,
     });
   },
 
   render() {
 
+    let buttonLabelStyle = {
+      padding: '0 16px 0 8px',
+    };
+
     let containerStyle = {
       textAlign: 'center',
-      paddingTop: '100px',
       maxWidth: '500px',
-      marginLeft: 'auto',
-      marginRight: 'auto',
     };
 
     let standardActions = [
-      { text: 'Okay' },
+      { text: 'Add' },
     ];
 
     return (
 
-      <div className="container" style={containerStyle}>
+      <div className="center-block" style={containerStyle}>
 
         <Dialog
           title="Add Client"
           actions={standardActions}
+          autoScrollBodyContent={true}
           ref="addClientDialog">
           <TextField
             hintText="Client's Name"
@@ -76,9 +80,14 @@ let Main = React.createClass({
         </Dialog>
         <div className="row">
           <div className="col-xs-12">
-            <h1 className="pull-left">Clients</h1>
+            <TextField
+              hintText="Search Client List"
+              className="pull-left"
+              underlineFocusStyle={{borderColor: Colors.blue900}} />
             <div className="pull-right">
-              <RaisedButton style={{marginTop: '20px'}} label="Add Client" primary={true} onTouchTap={this._handleTouchTap} />
+              <RaisedButton label="Add Client" primary={true} onTouchTap={this._handleTouchTap} labelStyle={buttonLabelStyle} >
+                <FontIcon className="glyphicon glyphicon-plus pull-left" style={{color:"white", padding: "8px 0 8px 8px", fontSize: '18px'}} />
+              </RaisedButton>
             </div>
           </div>
         </div>
@@ -87,7 +96,7 @@ let Main = React.createClass({
           <CardHeader
             title="Andrew Marcus"
             subtitle="Next Session: 9/4, 8:00am"
-            avatar={<Avatar style={{color:'red'}} className="pull-left">A</Avatar>}
+            avatar={<Avatar className="pull-left">A</Avatar>}
             showExpandableButton={true}>
           </CardHeader>
           <CardText expandable={true}>
@@ -109,7 +118,7 @@ let Main = React.createClass({
           <CardHeader
             title="Andrew Marcus"
             subtitle="Next Session: 9/4, 8:00am"
-            avatar={<Avatar style={{color:'red'}} className="pull-left">A</Avatar>}
+            avatar={<Avatar className="pull-left">A</Avatar>}
             showExpandableButton={true}>
           </CardHeader>
           <CardText expandable={true}>
@@ -131,7 +140,7 @@ let Main = React.createClass({
           <CardHeader
             title="Andrew Marcus"
             subtitle="Next Session: 9/4, 8:00am"
-            avatar={<Avatar style={{color:'red'}} className="pull-left">A</Avatar>}
+            avatar={<Avatar className="pull-left">A</Avatar>}
             showExpandableButton={true}>
           </CardHeader>
           <CardText expandable={true}>
