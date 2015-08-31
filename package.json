@@ -1,14 +1,18 @@
 {
-  "name": "insolent-spork",
-  "version": "0.8.0",
-  "description": "Personal Trainer Tool Belt",
+  "name": "material-ui-example",
+  "version": "0.1.0",
+  "engines": {
+    "node": "0.12.7"
+  },
+  "private": true,
+  "description": "Sample project that uses material-ui",
   "repository": {
     "type": "git",
     "url": "https://github.com/servicient/insolent-spork"
   },
   "scripts": {
     "start": "webpack-dev-server --config webpack-dev-server.config.js --progress --inline --colors",
-    "build": "./node_modules/.bin/webpack --config webpack-production.config.js --progress --colors"
+    "build": "webpack --config webpack-production.config.js --progress --colors"
   },
   "devDependencies": {
     "babel-core": "^5.8.21",
@@ -17,9 +21,11 @@
     "eslint": "^1.1.0",
     "eslint-loader": "^1.0.0",
     "eslint-plugin-react": "^3.2.2",
+    "file-loader": "^0.8.4",
     "html-webpack-plugin": "^1.6.1",
     "react-hot-loader": "^1.2.8",
     "transfer-webpack-plugin": "^0.1.4",
+    "url-loader": "^0.5.6",
     "webpack": "^1.11.0",
     "webpack-dev-server": "^1.10.1"
   },
