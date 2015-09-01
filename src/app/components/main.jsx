@@ -1,5 +1,5 @@
 let React = require('react');
-let ClientTable = require('./client_table');
+let ClientTable = require('./client-table');
 
 let Main = React.createClass({
   getInitialState() {
