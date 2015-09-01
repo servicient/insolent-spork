@@ -27,12 +27,18 @@ let Main = React.createClass({
     };
   },
   render() {
-    return <ClientTable clients={this.state.clients} onAdd={this._addClient} />
+    return <ClientTable 
+      clients={this.state.clients} 
+      onAddClient={this._addClient}
+      onAddSession={this._addSession} />
   },
   _addClient: function(clientObj) {
     this.setState(function(previousState, currentProps) {
       previousState.clients.push(clientObj);
     });
+  },
+  _addSession: function(sessionObj) {
+    console.log('TODO')
   }
 });
 

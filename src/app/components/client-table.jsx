@@ -15,6 +15,8 @@ let {
   TextField,
   IconButton,
   FontIcon,
+  DatePicker,
+  TimePicker
 } = mui;
 let ThemeManager = new mui.Styles.ThemeManager();
 let Colors = mui.Styles.Colors;
@@ -56,9 +58,14 @@ let ClientTable = React.createClass({
       paddingBottom: '70px',
     };
 
-    let dialogActions = [
+    let addClientActions = [
       { text: 'Cancel' },
-      { text: 'Submit', onTouchTap: this._onDialogSubmit, ref: 'dialogSubmit' }
+      { text: 'Submit', onTouchTap: this._createClient, ref: 'clientSubmit' }
+    ];
+
+    let addSessionActions = [
+      { text: 'Cancel' },
+      { text: 'Submit', onTouchTap: this._createSession, ref: 'sessionSubmit' }
     ];
 
     return (
@@ -67,8 +74,8 @@ let ClientTable = React.createClass({
 
         <Dialog
           title="Add Client"
-          actions={dialogActions}
-          actionFocus="dialogSubmit"
+          actions={addClientActions}
+          actionFocus="clientSubmit"
           autoScrollBodyContent={true}
           ref="addClientDialog">
           <TextField
@@ -87,6 +94,25 @@ let ClientTable = React.createClass({
             floatingLabelText="Client's Phone" />
         </Dialog>
 
+        <Dialog
+          title="Add Session"
+          actions={addSessionActions}
+          actionFocus="sessionSubmit"
+          autoScrollBodyContent={true}
+          ref="addSessionDialog">
+          <DatePicker hintText="Select Date" ref="sessionDate" />
+          <br />
+          <TimePicker
+            format="ampm"
+            ref="sessionTime"
+            hintText="Select Time" />
+          <br />
+          <TextField
+            hintText="Notes"
+            ref="sessionNotes"
+            multiLine={true} />
+        </Dialog>
+
         <div className="row">
           <div className="col-xs-12">
             <TextField
@@ -94,7 +120,7 @@ let ClientTable = React.createClass({
               className="pull-left"
               underlineFocusStyle={{borderColor: Colors.blue900}} />
             <div className="pull-right">
-              <RaisedButton label="Add Client" primary={true} onTouchTap={this._handleTouchTap} labelStyle={buttonLabelStyle} >
+              <RaisedButton label="Add Client" primary={true} onTouchTap={this._addClient} labelStyle={buttonLabelStyle} >
                 <FontIcon className="glyphicon glyphicon-plus pull-left" style={{color:"white", padding: "8px 0 8px 8px", fontSize: '18px'}} />
               </RaisedButton>
             </div>
@@ -113,28 +139,45 @@ let ClientTable = React.createClass({
               <CardActions expandable={true}>
                 <FlatButton label={client.email} primary={true}/>
                 <FlatButton label={client.phone} secondary={true}/>
+                <FlatButton label="+ Add Session" secondary={true} 
+                  onTouchTap={this._addSession} />
               </CardActions>
             </Card>
           )
-        })}
+        }.bind(this))}
         
       </div>
     );
   },
 
-  _handleTouchTap() {
+  _addClient() {
     this.refs.addClientDialog.show();
   },
 
-  _onDialogSubmit() {
-    console.log('submit')
-    this.props.onAdd(
+  _addSession() {
+    this.refs.addSessionDialog.show();
+  },
+
+  _createClient() {
+    console.log('client')
+    this.props.onAddClient(
       { id: +(new Date), 
         name: this.refs.clientName.getValue(),
         email: this.refs.clientEmail.getValue(),
         phone: this.refs.clientPhone.getValue(),
       });
     this.refs.addClientDialog.dismiss();
+  },
+
+  _createSession() {
+    console.log('session')
+    this.props.onAddSession(
+      { id: +(new Date), 
+        name: this.refs.clientName.getValue(),
+        email: this.refs.clientEmail.getValue(),
+        phone: this.refs.clientPhone.getValue(),
+      });
+    this.refs.addSessionDialog.dismiss();
   }
 });
 
