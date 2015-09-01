@@ -1,15 +1,20 @@
 let React = require('react');
+let mui = require('material-ui');
+let {
+  AppBar,
+  LeftNav,
+  MenuItem,
+} = mui;
 
 let Header = React.createClass({
 
   render() {
     return (
-      <div className="container">
-        <img src={require('../images/logo.png')} />
+      <div>
+        <h5>nav</h5>
       </div>
     );
   },
-
 });
 
 module.exports = Header;

@@ -2,6 +2,8 @@
 
 let React = require('react');
 let mui = require('material-ui');
+let ClientInputs = require('./client-inputs')
+let ClientCard = require('./client-card')
 let Dialog = mui.Dialog;
 let {
   Avatar,
@@ -20,8 +22,6 @@ let {
 } = mui;
 let ThemeManager = new mui.Styles.ThemeManager();
 let Colors = mui.Styles.Colors;
-
-
 
 
 let Main = React.createClass({
@@ -46,11 +46,13 @@ let Main = React.createClass({
 
     let buttonLabelStyle = {
       padding: '0 16px 0 8px',
+      fontSize: '25px',
+      fontWeight: '300',
     };
 
     let containerStyle = {
       textAlign: 'center',
-      maxWidth: '500px',
+      paddingBottom: '70px',
     };
 
     let standardActions = [
@@ -66,96 +68,26 @@ let Main = React.createClass({
           actions={standardActions}
           autoScrollBodyContent={true}
           ref="addClientDialog">
-          <TextField
-            hintText="Client's Name"
-            floatingLabelText="Client's Name" />
-          <br />
-          <TextField
-            hintText="Email"
-            floatingLabelText="Client's Email" />
-          <br />
-          <TextField
-            hintText="Phone"
-            floatingLabelText="Client's Phone" />
+          <ClientInputs />
         </Dialog>
         <div className="row">
           <div className="col-xs-12">
             <TextField
               hintText="Search Client List"
-              className="pull-left"
               underlineFocusStyle={{borderColor: Colors.blue900}} />
-            <div className="pull-right">
-              <RaisedButton label="Add Client" primary={true} onTouchTap={this._handleTouchTap} labelStyle={buttonLabelStyle} >
-                <FontIcon className="glyphicon glyphicon-plus pull-left" style={{color:"white", padding: "8px 0 8px 8px", fontSize: '18px'}} />
-              </RaisedButton>
-            </div>
           </div>
         </div>
 
-        <Card initiallyExpanded={false}>
-          <CardHeader
-            title="Andrew Marcus"
-            subtitle="Next Session: 9/4, 8:00am"
-            avatar={<Avatar className="pull-left">A</Avatar>}
-            showExpandableButton={true}>
-          </CardHeader>
-          <CardText expandable={true}>
-            Something about something yeah
-          </CardText>
-          <CardActions expandable={true}>
-            <FlatButton label="Action1" primary={true}/>
-          </CardActions>
-          <CardText expandable={true}>
-            More Something about something
-          </CardText>
-          <CardActions expandable={true}>
-            <FlatButton label="Action2" secondary={true}/>
-          </CardActions>
-        </Card>
+        <ClientCard />
+        <div className="text-center" style={{position: "fixed", left: "0", bottom: "0", right: "0"}} >
+          <RaisedButton label="+ Add Client" primary={true} 
+          onTouchTap={this._handleTouchTap} 
+          labelStyle={buttonLabelStyle} 
+          style={{width: "100%", height: "60px"}} >
+          </RaisedButton>
+        </div>
 
-
-        <Card initiallyExpanded={false}>
-          <CardHeader
-            title="Andrew Marcus"
-            subtitle="Next Session: 9/4, 8:00am"
-            avatar={<Avatar className="pull-left">A</Avatar>}
-            showExpandableButton={true}>
-          </CardHeader>
-          <CardText expandable={true}>
-            Something about something yeah
-          </CardText>
-          <CardActions expandable={true}>
-            <FlatButton label="Action1" primary={true}/>
-          </CardActions>
-          <CardText expandable={true}>
-            More Something about something
-          </CardText>
-          <CardActions expandable={true}>
-            <FlatButton label="Action2" secondary={true}/>
-          </CardActions>
-        </Card>
-
-
-        <Card initiallyExpanded={false}>
-          <CardHeader
-            title="Andrew Marcus"
-            subtitle="Next Session: 9/4, 8:00am"
-            avatar={<Avatar className="pull-left">A</Avatar>}
-            showExpandableButton={true}>
-          </CardHeader>
-          <CardText expandable={true}>
-            Something about something yeah
-          </CardText>
-          <CardActions expandable={true}>
-            <FlatButton label="Action1" primary={true}/>
-          </CardActions>
-          <CardText expandable={true}>
-            More Something about something
-          </CardText>
-          <CardActions expandable={true}>
-            <FlatButton label="Action2" secondary={true}/>
-          </CardActions>
-        </Card>
+        
       </div>
     );
   },
