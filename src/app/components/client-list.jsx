@@ -1,6 +1,8 @@
 let React = require('react');
 let mui = require('material-ui');
 let Dialog = mui.Dialog;
+let Link = require('react-router').Link;
+
 let {
   Avatar,
   Card,
@@ -23,9 +25,28 @@ let Colors = mui.Styles.Colors;
 
 let ClientList = React.createClass({
 
-  getDefaultProps() {
+  getInitialState() {
     return {
-      
+      clients: [
+        {
+          id: 1,
+          name: 'Andrew Marcus',
+          email: 'am@test.com',
+          phone: '111-111-1111'
+        },
+        {
+          id: 2,
+          name: 'Jesse Silkoff',
+          email: 'js@test.com',
+          phone: '222-222-2222'
+        },
+        {
+          id: 3,
+          name: 'John Hayes',
+          email: 'jh@test.com',
+          phone: '333-333-3333'
+        }
+      ]
     };
   },
 
@@ -63,15 +84,9 @@ let ClientList = React.createClass({
       { text: 'Submit', onTouchTap: this._createClient, ref: 'clientSubmit' }
     ];
 
-    let addSessionActions = [
-      { text: 'Cancel' },
-      { text: 'Submit', onTouchTap: this._createSession, ref: 'sessionSubmit' }
-    ];
-
     return (
 
       <div className="center-block" style={containerStyle}>
-
         <Dialog
           title="Add Client"
           actions={addClientActions}
@@ -94,25 +109,6 @@ let ClientList = React.createClass({
             floatingLabelText="Client's Phone" />
         </Dialog>
 
-        <Dialog
-          title="Add Session"
-          actions={addSessionActions}
-          actionFocus="sessionSubmit"
-          autoScrollBodyContent={true}
-          ref="addSessionDialog">
-          <DatePicker hintText="Select Date" ref="sessionDate" />
-          <br />
-          <TimePicker
-            format="ampm"
-            ref="sessionTime"
-            hintText="Select Time" />
-          <br />
-          <TextField
-            hintText="Notes"
-            ref="sessionNotes"
-            multiLine={true} />
-        </Dialog>
-
         <div className="row">
           <div className="col-xs-12">
             <TextField
@@ -120,14 +116,14 @@ let ClientList = React.createClass({
               className="pull-left"
               underlineFocusStyle={{borderColor: Colors.blue900}} />
             <div className="pull-right">
-              <RaisedButton label="Add Client" primary={true} onTouchTap={this._addClient} labelStyle={buttonLabelStyle} >
+              <RaisedButton label="Add Client" primary={true} onTouchTap={this._newClient} labelStyle={buttonLabelStyle} >
                 <FontIcon className="glyphicon glyphicon-plus pull-left" style={{color:"white", padding: "8px 0 8px 8px", fontSize: '18px'}} />
               </RaisedButton>
             </div>
           </div>
         </div>
 
-        {this.props.clients.map(function(client) {
+        {this.state.clients.map(function(client) {
           return (
             <Card initiallyExpanded={false} key={client.id}>
               <CardHeader
@@ -139,8 +135,6 @@ let ClientList = React.createClass({
               <CardActions expandable={true}>
                 <FlatButton label={client.email} primary={true}/>
                 <FlatButton label={client.phone} secondary={true}/>
-                <FlatButton label="+ Add Session" secondary={true} 
-                  onTouchTap={this._addSession} />
               </CardActions>
             </Card>
           )
@@ -150,35 +144,23 @@ let ClientList = React.createClass({
     );
   },
 
-  _addClient() {
+  _newClient() {
     this.refs.addClientDialog.show();
   },
 
-  _addSession() {
-    this.refs.addSessionDialog.show();
-  },
-
   _createClient() {
-    console.log('client')
-    this.props.onAddClient(
-      { id: +(new Date), 
-        name: this.refs.clientName.getValue(),
-        email: this.refs.clientEmail.getValue(),
-        phone: this.refs.clientPhone.getValue(),
-      });
+    let clientObj = { 
+      id: +(new Date), 
+      name: this.refs.clientName.getValue(),
+      email: this.refs.clientEmail.getValue(),
+      phone: this.refs.clientPhone.getValue(),
+    };
+    this.setState(function(previousState, currentProps) {
+      previousState.clients.push(clientObj);
+    });
     this.refs.addClientDialog.dismiss();
-  },
-
-  _createSession() {
-    console.log('session')
-    this.props.onAddSession(
-      { id: +(new Date), 
-        name: this.refs.clientName.getValue(),
-        email: this.refs.clientEmail.getValue(),
-        phone: this.refs.clientPhone.getValue(),
-      });
-    this.refs.addSessionDialog.dismiss();
   }
+
 });
 
 module.exports = ClientList;
