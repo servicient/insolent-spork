@@ -23,9 +23,9 @@ let Colors = mui.Styles.Colors;
 
 let SessionList = React.createClass({
 
-  getDefaultProps() {
+  getInitialState () {
     return {
-      
+      sessions: []  
     };
   },
 
@@ -39,10 +39,23 @@ let SessionList = React.createClass({
     };
   },
 
-  componentWillMount() {
-    ThemeManager.setPalette({
-      accent1Color: Colors.blue900,
-    });
+  componentDidMount() {
+    let clientId = this.props.params.clientId;
+    this.fetchSessions(clientId, function(err, sessions) {
+      console.log(sessions)
+      this.setState({ sessions: sessions });
+    }.bind(this));
+  },
+
+  fetchSessions: function(clientId, cb) {
+    cb(null, [
+      {
+        clientId: 1,
+        clientName: 'Andrew Marcus',
+        time: '2015-09-10 18:00:00',
+        duration: 60
+      }]
+    );
   },
 
   render() {
@@ -96,6 +109,22 @@ let SessionList = React.createClass({
           </div>
         </div>
         
+        {this.state.sessions.map(function(session) {
+          return (
+            <Card initiallyExpanded={false} key={session.id}>
+              <CardTitle
+                title={session.clientName + ' @ ' + session.time}
+                subtitle={session.duration + ' min'}
+                showExpandableButton={true}>
+              </CardTitle>
+              <CardActions expandable={true}>
+                <FlatButton label="Reschedule" primary={true}/>
+                <FlatButton label="Cancel" secondary={true}/>
+              </CardActions>
+            </Card>
+          )
+        }.bind(this))}
+
       </div>
     );
   },

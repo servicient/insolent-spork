@@ -25,6 +25,7 @@
         <div className="container">
           <div className="row">
             <Header />
+            <br />
             <div className="hidden-xs hidden-sm col-md-4">
               <Sidebar />
             </div>
@@ -42,7 +43,7 @@
     <Route path="/" handler={App}>
       <DefaultRoute handler={ClientList}/>
       <Route name="clients" path="clients" handler={ClientList}/>
-      <Route name="sessions" path="sessions" handler={SessionList}/>
+      <Route name="clientSessions" path="clients/:id/sessions" handler={SessionList}/>
     </Route>
   );
 

@@ -4,18 +4,28 @@ let Link = require('react-router').Link;
 
 let {
   AppBar,
-  LeftNav,
-  MenuItem,
+  IconButton,
+  NavigationClose,
+  FlatButton
 } = mui;
+let ThemeManager = new mui.Styles.ThemeManager();
 
 let Header = React.createClass({
 
+  childContextTypes: {
+    muiTheme: React.PropTypes.object,
+  },
+
+  getChildContext() {
+    return {
+      muiTheme: ThemeManager.getCurrentTheme(),
+    };
+  },
+
   render() {
     return (
-      <div>
-        <h5><Link to="clients">clients</Link></h5>
-        <h5><Link to="sessions">sessions</Link></h5>
-      </div>
+      <AppBar
+        title="FitnessTrainer" showMenuIconButton={false} />
     );
   },
 });

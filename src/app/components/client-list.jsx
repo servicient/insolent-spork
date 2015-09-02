@@ -60,12 +60,6 @@ let ClientList = React.createClass({
     };
   },
 
-  componentWillMount() {
-    ThemeManager.setPalette({
-      accent1Color: Colors.blue900,
-    });
-  },
-
   render() {
 
     let buttonLabelStyle = {
@@ -135,6 +129,7 @@ let ClientList = React.createClass({
               <CardActions expandable={true}>
                 <FlatButton label={client.email} primary={true}/>
                 <FlatButton label={client.phone} secondary={true}/>
+                <Link to="clientSessions" params={{id: client.id}}>+ Add Session</Link>
               </CardActions>
             </Card>
           )
