@@ -21,7 +21,7 @@ let {
 let ThemeManager = new mui.Styles.ThemeManager();
 let Colors = mui.Styles.Colors;
 
-let ClientTable = React.createClass({
+let ClientList = React.createClass({
 
   getDefaultProps() {
     return {
@@ -181,4 +181,4 @@ let ClientTable = React.createClass({
   }
 });
 
-module.exports = ClientTable;
+module.exports = ClientList;

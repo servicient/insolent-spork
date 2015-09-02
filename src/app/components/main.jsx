@@ -1,5 +1,5 @@
 let React = require('react');
-let ClientTable = require('./client-table');
+let ClientList = require('./client-list');
 
 let Main = React.createClass({
   getInitialState() {
@@ -27,7 +27,7 @@ let Main = React.createClass({
     };
   },
   render() {
-    return <ClientTable 
+    return <ClientList 
       clients={this.state.clients} 
       onAddClient={this._addClient}
       onAddSession={this._addSession} />
