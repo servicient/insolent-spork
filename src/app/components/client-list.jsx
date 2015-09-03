@@ -112,7 +112,7 @@ let ClientList = React.createClass({
               <CardHeader
                 title={client.name}
                 subtitle="Next Session: 9/4, 8:00am"
-                avatar={<Avatar className="pull-left">A</Avatar>}
+                avatar={"http://lorempixel.com/100/100/people/" + client.id}
                 showExpandableButton={true}>
               </CardHeader>
               <CardActions expandable={true}>
