@@ -76,20 +76,24 @@ let ClientList = React.createClass({
           actionFocus="clientSubmit"
           autoScrollBodyContent={true}
           ref="addClientDialog">
+
           <TextField
             hintText="Client's Name"
             ref="clientName"
             floatingLabelText="Client's Name" />
+          <FontIcon className="material-icons">face</FontIcon>
           <br />
           <TextField
             hintText="Email"
             ref="clientEmail"
             floatingLabelText="Client's Email" />
+          <FontIcon className="material-icons">email</FontIcon>
           <br />
           <TextField
             hintText="Phone"
             ref="clientPhone"
             floatingLabelText="Client's Phone" />
+          <FontIcon className="material-icons">phone</FontIcon>
         </Dialog>
 
         <div className="row">
