@@ -165,7 +165,8 @@ let ClientList = React.createClass({
   _newClient() {
     let clientObj = {};
     this.setState(function(previousState, currentProps) {
-      previousState.clients.unshift(clientObj);
+      let newList = [clientObj].concat(previousState.clients);
+      return {clients: newList};
     });
     // this.refs.addClientDialog.show();
   },
