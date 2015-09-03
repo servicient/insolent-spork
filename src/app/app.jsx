@@ -2,13 +2,12 @@
   let React = require('react/addons');
   let injectTapEventPlugin = require('react-tap-event-plugin');
   let ClientList = require('./components/client-list');
-  ClientList = require('./components/mui-wrapper')(ClientList);
   let SessionList = require('./components/session-list');
-  SessionList = require('./components/mui-wrapper')(SessionList);
   let Header = require('./components/header');
-  Header = require('./components/mui-wrapper')(Header);
   let Sidebar = require('./components/sidebar');
-  Sidebar = require('./components/mui-wrapper')(Sidebar);
+
+  let mui = require('material-ui');
+  let ThemeManager = new mui.Styles.ThemeManager();
   
   // Routing
   let Router = require('react-router');
@@ -24,6 +23,20 @@
   injectTapEventPlugin();
 
   let App = React.createClass({
+    childContextTypes: {
+      muiTheme: React.PropTypes.object
+    },
+
+    getChildContext() {
+      return {
+        muiTheme: ThemeManager.getCurrentTheme()
+      };
+    },
+
+    componentWillMount () {
+      ThemeManager.setTheme(ThemeManager.types.DARK);
+    },
+
     render () {
       return (
         <div className="container">
