@@ -1,10 +1,13 @@
 (function () {
   let React = require('react/addons');
   let injectTapEventPlugin = require('react-tap-event-plugin');
-  let ClientList = require('./components/client-list.jsx');
-  let SessionList = require('./components/session-list.jsx');
-  let Header = require('./components/header.jsx');
-  let Sidebar = require('./components/sidebar.jsx');
+  let ClientList = require('./components/client-list');
+  ClientList = require('./components/mui-wrapper')(ClientList);
+  let SessionList = require('./components/session-list');
+  SessionList = require('./components/mui-wrapper')(SessionList);
+  let Header = require('./components/header');
+  Header = require('./components/mui-wrapper')(Header);
+  let Sidebar = require('./components/sidebar');
   
   // Routing
   let Router = require('react-router');

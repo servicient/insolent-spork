@@ -18,7 +18,6 @@ let {
   DatePicker,
   TimePicker
 } = mui;
-let ThemeManager = new mui.Styles.ThemeManager();
 let Colors = mui.Styles.Colors;
 
 let SessionList = React.createClass({
@@ -26,16 +25,6 @@ let SessionList = React.createClass({
   getInitialState () {
     return {
       sessions: []  
-    };
-  },
-
-  childContextTypes: {
-    muiTheme: React.PropTypes.object,
-  },
-
-  getChildContext() {
-    return {
-      muiTheme: ThemeManager.getCurrentTheme(),
     };
   },
 

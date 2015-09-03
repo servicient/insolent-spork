@@ -8,20 +8,8 @@ let {
   NavigationClose,
   FlatButton
 } = mui;
-let ThemeManager = new mui.Styles.ThemeManager();
 
 let Header = React.createClass({
-
-  childContextTypes: {
-    muiTheme: React.PropTypes.object,
-  },
-
-  getChildContext() {
-    return {
-      muiTheme: ThemeManager.getCurrentTheme(),
-    };
-  },
-
   render() {
     return (
       <AppBar

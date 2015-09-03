@@ -20,7 +20,6 @@ let {
   DatePicker,
   TimePicker
 } = mui;
-let ThemeManager = new mui.Styles.ThemeManager();
 let Colors = mui.Styles.Colors;
 
 let ClientList = React.createClass({
@@ -47,16 +46,6 @@ let ClientList = React.createClass({
           phone: '333-333-3333'
         }
       ]
-    };
-  },
-
-  childContextTypes: {
-    muiTheme: React.PropTypes.object,
-  },
-
-  getChildContext() {
-    return {
-      muiTheme: ThemeManager.getCurrentTheme(),
     };
   },
 
