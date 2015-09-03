@@ -8,6 +8,7 @@
   let Header = require('./components/header');
   Header = require('./components/mui-wrapper')(Header);
   let Sidebar = require('./components/sidebar');
+  Sidebar = require('./components/mui-wrapper')(Sidebar);
   
   // Routing
   let Router = require('react-router');
