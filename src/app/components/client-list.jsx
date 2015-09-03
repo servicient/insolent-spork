@@ -2,6 +2,7 @@ let React = require('react');
 let mui = require('material-ui');
 let Dialog = mui.Dialog;
 let Link = require('react-router').Link;
+let _ = require('lodash');
 
 let {
   Avatar,
@@ -78,19 +79,16 @@ let ClientList = React.createClass({
           ref="addClientDialog">
 
           <TextField
-            hintText="Client's Name"
             ref="clientName"
             floatingLabelText="Client's Name" />
           <FontIcon className="material-icons">face</FontIcon>
           <br />
           <TextField
-            hintText="Email"
             ref="clientEmail"
             floatingLabelText="Client's Email" />
           <FontIcon className="material-icons">email</FontIcon>
           <br />
           <TextField
-            hintText="Phone"
             ref="clientPhone"
             floatingLabelText="Client's Phone" />
           <FontIcon className="material-icons">phone</FontIcon>
@@ -110,30 +108,66 @@ let ClientList = React.createClass({
           </div>
         </div>
 
-        {this.state.clients.map(function(client) {
-          return (
-            <Card initiallyExpanded={false} key={client.id}>
-              <CardHeader
-                title={client.name}
-                subtitle="Next Session: 9/4, 8:00am"
-                avatar={"http://lorempixel.com/100/100/people/" + client.id}
-                showExpandableButton={true}>
-              </CardHeader>
-              <CardActions expandable={true}>
-                <FlatButton label={client.email} primary={true}/>
-                <FlatButton label={client.phone} secondary={true}/>
-                <Link to="clientSessions" params={{id: client.id}}>+ Add Session</Link>
-              </CardActions>
-            </Card>
-          )
-        }.bind(this))}
+        {this.state.clients.map((client) => {
+          if (client.id) {
+            return (
+              <Card initiallyExpanded={false} key={client.id}>
+                <CardHeader
+                  title={client.name}
+                  subtitle="Next Session: 9/4, 8:00am"
+                  avatar={"http://lorempixel.com/100/100/people/" + client.id}
+                  showExpandableButton={true}>
+                </CardHeader>
+                <CardActions expandable={true}>
+                  <FlatButton label={client.email} primary={true}/>
+                  <FlatButton label={client.phone} secondary={true}/>
+                  <Link to="clientSessions" params={{id: client.id}}>+ Add Session</Link>
+                </CardActions>
+              </Card>
+            )
+          } else {
+            return (
+              <Card initiallyExpanded={true} key={0}>
+                <CardHeader
+                  title="NEW CLIENT"
+                  showExpandableButton={false}
+                  avatar={<Avatar>A</Avatar>}>
+                </CardHeader>
+                <CardText>
+                  <TextField
+                    ref="clientName"
+                    floatingLabelText="Client's Name" />
+                  <FontIcon className="material-icons">face</FontIcon>
+                  <br />
+                  <TextField
+                    ref="clientEmail"
+                    floatingLabelText="Client's Email" />
+                  <FontIcon className="material-icons">email</FontIcon>
+                  <br />
+                  <TextField
+                    ref="clientPhone"
+                    floatingLabelText="Client's Phone" />
+                  <FontIcon className="material-icons">phone</FontIcon>
+                </CardText>
+                <CardActions expandable={true}>
+                  <FlatButton label="Save" primary={true} onTouchTap={this._createClient} />
+                  <FlatButton label="Cancel" secondary={true}/>
+                </CardActions>
+              </Card>
+            )
+          }
+        })}
         
       </div>
     );
   },
 
   _newClient() {
-    this.refs.addClientDialog.show();
+    let clientObj = {};
+    this.setState(function(previousState, currentProps) {
+      previousState.clients.unshift(clientObj);
+    });
+    // this.refs.addClientDialog.show();
   },
 
   _createClient() {
@@ -143,12 +177,15 @@ let ClientList = React.createClass({
       email: this.refs.clientEmail.getValue(),
       phone: this.refs.clientPhone.getValue(),
     };
-    this.setState(function(previousState, currentProps) {
-      previousState.clients.push(clientObj);
+    this.setState((previousState, currentProps) => {
+      let newList = [clientObj].concat(previousState.clients);
+      let nonEmpty = newList.map(function(client) {
+        if (client.id) return client;
+      });
+      return {clients: _.compact(nonEmpty)};
     });
-    this.refs.addClientDialog.dismiss();
+    // this.refs.addClientDialog.dismiss();
   }
-
 });
 
 module.exports = ClientList;
