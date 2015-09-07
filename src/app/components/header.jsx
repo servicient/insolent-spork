@@ -13,7 +13,9 @@ let Header = React.createClass({
   render() {
     return (
       <AppBar
-        title="FitnessTrainer" showMenuIconButton={false} />
+        style={{background: '#424242', marginBottom: '15px'}}
+        title="FitnessTrainer" 
+        showMenuIconButton={false} />
     );
   },
 });

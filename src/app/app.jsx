@@ -39,15 +39,16 @@
 
     render () {
       return (
-        <div className="container">
-          <div className="row">
-            <Header />
-            <br />
-            <div className="hidden-xs hidden-sm col-md-4">
-              <Sidebar />
-            </div>
-            <div className="col-sm-12 col-md-8">
-              <RouteHandler/>
+        <div className="main">
+          <Header />
+          <div className="container">
+            <div className="row">
+              <div className="hidden-xs hidden-sm col-md-4">
+                <Sidebar />
+              </div>
+              <div className="col-sm-12 col-md-8">
+                <RouteHandler/>
+              </div>
             </div>
           </div>
         </div>

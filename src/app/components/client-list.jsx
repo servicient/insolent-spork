@@ -113,6 +113,9 @@ let ClientList = React.createClass({
             return (
               <Card initiallyExpanded={false} key={client.id}>
                 <CardHeader
+                  style={{fontWeight: '200'}}
+                  titleColor={'white'}
+                  subtitleColor={'white'}
                   title={client.name}
                   subtitle="Next Session: 9/4, 8:00am"
                   avatar={"http://lorempixel.com/100/100/people/" + client.id}
