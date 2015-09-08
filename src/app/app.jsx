@@ -17,6 +17,28 @@
   //Needed for React Developer Tools
   window.React = React;
 
+  // TODO: replace with api
+  window.CLIENTS = [
+    {
+      id: 1,
+      name: 'Andrew Marcus',
+      email: 'am@test.com',
+      phone: '111-111-1111'
+    },
+    {
+      id: 2,
+      name: 'Jesse Silkoff',
+      email: 'js@test.com',
+      phone: '222-222-2222'
+    },
+    {
+      id: 3,
+      name: 'John Hayes',
+      email: 'jh@test.com',
+      phone: '333-333-3333'
+    }
+  ];
+
   //Needed for onTouchTap
   //Can go away when react 1.0 release
   //Check this repo:
