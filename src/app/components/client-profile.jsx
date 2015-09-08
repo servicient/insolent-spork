@@ -1,106 +1,91 @@
-let React = require('react');
-let mui = require('material-ui');
-let Dialog = mui.Dialog;
-let Link = require('react-router').Link;
-let _ = require('lodash');
+let React = require("react");
+let mui = require("material-ui");
+let Link = require("react-router").Link;
 
 let {
-  Avatar,
-  Card,
-  CardActions,
-  CardExpandable,
-  CardHeader,
-  CardMedia,
-  CardText,
-  CardTitle,
-  FlatButton,
-  RaisedButton,
-  TextField,
-  IconButton,
-  FontIcon,
-  DatePicker,
-  TimePicker
+  Table,
+  TableBody,
+  TableHeaderColumn,
+  TableHeader,
+  TableRowColumn,
+  TableRow,
+  TableFooter,
 } = mui;
+
 let Colors = mui.Styles.Colors;
 
 let ClientProfile = React.createClass({
 
-  getInitialState() {
-    return {
-      clients: [
-        {
-          id: 1,
-          name: 'Andrew Marcus',
-          email: 'am@test.com',
-          phone: '111-111-1111'
-        },
-        {
-          id: 2,
-          name: 'Jesse Silkoff',
-          email: 'js@test.com',
-          phone: '222-222-2222'
-        },
-        {
-          id: 3,
-          name: 'John Hayes',
-          email: 'jh@test.com',
-          phone: '333-333-3333'
-        }
-      ]
-    };
-  },
-
   render() {
 
-    let buttonLabelStyle = {
-      padding: '0 16px 0 8px',
-      fontSize: '25px',
-      fontWeight: '300',
-    };
-
     let containerStyle = {
-      textAlign: 'center',
-      paddingBottom: '70px',
+      textAlign: "center",
+      paddingBottom: "70px",
     };
-
-    let addClientActions = [
-      { text: 'Cancel' },
-      { text: 'Submit', onTouchTap: this._createClient, ref: 'clientSubmit' }
-    ];
+    this.state = {
+      fixedHeader: false,
+      fixedFooter: true,
+      stripedRows: true,
+      displayBorder: true,
+      showRowHover: false,
+      selectable: false,
+      multiSelectable: false,
+      displaySelectAll: false,
+      deselectOnClickaway: false,
+      displayRowCheckbox: false,
+      adjustForCheckbox: false,
+      height: '100%',
+    };
 
     return (
 
-      <div className="center-block" style={containerStyle}>
-        <h1>Client View</h1>
+      <div>
+        <div className="container">
+          <div className="row">
+            <div className="col-xs-12">
+              <span style={{color:"white"}}> Andrew Marcus</span>
+            </div>
+          </div>
+        </div>
+
+
+
+        <Table
+          height={this.state.height}
+          fixedHeader={this.state.fixedHeader}
+          fixedFooter={this.state.fixedFooter}
+          selectable={this.state.selectable}
+          multiSelectable={this.state.multiSelectable}
+          onRowSelection={this._onRowSelection}>
+          <TableHeader 
+            enableSelectAll={this.state.enableSelectAll}
+            displaySelectAll={this.state.displaySelectAll}
+            adjustForCheckbox={this.state.adjustForCheckbox}
+            // mui requires a table header, but jesse don't want one
+            style={{display: 'none'}} >
+            <TableRow>
+              <TableHeaderColumn>null</TableHeaderColumn>
+              <TableHeaderColumn>null</TableHeaderColumn>
+              <TableHeaderColumn>null</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody
+            deselectOnClickaway={this.state.deselectOnClickaway}
+            showRowHover={this.state.showRowHover}
+            displayRowCheckbox={this.state.displayRowCheckbox}
+            displayBorder={this.state.displayBorder}
+            stripedRows={this.state.stripedRows}>
+            <TableRow>
+              <TableRowColumn>Complete</TableRowColumn>
+              <TableRowColumn>$50</TableRowColumn>
+              <TableRowColumn>09/04/88</TableRowColumn>
+            </TableRow>
+          </TableBody>
+        </Table>
       </div>
+
     );
   },
-
-  _newClient() {
-    let clientObj = {};
-    this.setState(function(previousState, currentProps) {
-      let newList = [clientObj].concat(previousState.clients);
-      return {clients: newList};
-    });
-    // this.refs.addClientDialog.show();
-  },
-
-  _createClient() {
-    let clientObj = { 
-      id: +(new Date), 
-      name: this.refs.clientName.getValue(),
-      email: this.refs.clientEmail.getValue(),
-      phone: this.refs.clientPhone.getValue(),
-    };
-    this.setState((previousState, currentProps) => {
-      let newList = [clientObj].concat(previousState.clients);
-      let nonEmpty = newList.map(function(client) {
-        if (client.id) return client;
-      });
-      return {clients: _.compact(nonEmpty)};
-    });
-    // this.refs.addClientDialog.dismiss();
-  }
 });
 
 module.exports = ClientProfile;
