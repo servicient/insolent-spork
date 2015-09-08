@@ -71,28 +71,6 @@ let ClientList = React.createClass({
     return (
 
       <div className="center-block" style={containerStyle}>
-        <Dialog
-          title="Add Client"
-          actions={addClientActions}
-          actionFocus="clientSubmit"
-          autoScrollBodyContent={true}
-          ref="addClientDialog">
-
-          <TextField
-            ref="clientName"
-            floatingLabelText="Client's Name" />
-          <FontIcon className="material-icons">face</FontIcon>
-          <br />
-          <TextField
-            ref="clientEmail"
-            floatingLabelText="Client's Email" />
-          <FontIcon className="material-icons">email</FontIcon>
-          <br />
-          <TextField
-            ref="clientPhone"
-            floatingLabelText="Client's Phone" />
-          <FontIcon className="material-icons">phone</FontIcon>
-        </Dialog>
 
         <div className="row">
           <div className="col-xs-12">
@@ -125,6 +103,8 @@ let ClientList = React.createClass({
                   <FlatButton label={client.email} primary={true}/>
                   <FlatButton label={client.phone} secondary={true}/>
                   <Link to="clientSessions" params={{id: client.id}}>+ Add Session</Link>
+                  <Link to="clientProfile" params={{id: client.id}}>View Profile</Link>
+
                 </CardActions>
               </Card>
             )

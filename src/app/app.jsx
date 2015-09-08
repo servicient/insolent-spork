@@ -5,6 +5,7 @@
   let SessionList = require('./components/session-list');
   let Header = require('./components/header');
   let Sidebar = require('./components/sidebar');
+  let ClientProfile = require('./components/client-profile');
 
   let mui = require('material-ui');
   let ThemeManager = new mui.Styles.ThemeManager();
@@ -62,6 +63,7 @@
       <DefaultRoute handler={ClientList}/>
       <Route name="clients" path="clients" handler={ClientList}/>
       <Route name="clientSessions" path="clients/:id/sessions" handler={SessionList}/>
+      <Route name="clientProfile" path="clients/:id" handler={ClientProfile}/>
     </Route>
   );
 
