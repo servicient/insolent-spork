@@ -40,14 +40,20 @@ let ClientProfile = React.createClass({
     return (
 
       <div>
-        <div className="container">
-          <div className="row">
-            <div className="col-xs-12">
-              <span style={{color:"white"}}> Andrew Marcus</span>
+        <div className="row">
+          <div className="col-xs-12" style={{color: "white"}} >
+            <div className="pull-left">
+              <div> Andrew Marcus</div>
+              <div className="btn btn-info btn-sm">Schedule Session</div>
+            </div>
+            <div className="pull-right">
+              <div>
+                Balance: $300
+              </div>
+              <div className="btn btn-success btn-sm">Add to Balance</div>
             </div>
           </div>
         </div>
-
 
 
         <Table
