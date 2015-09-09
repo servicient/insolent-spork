@@ -10,6 +10,12 @@ store.client.where = (obj, cb) => {
   setTimeout(() => { cb(null, data); }, 500);
 };
 
+store.client.first = (obj, cb) => {
+  store.client.where(obj, (err, clients) => {
+    cb(null, clients[0]);    
+  });
+};
+
 store.client.create = (obj, cb) => {
   obj.id = +new Date; //TODO
   window.CLIENTS.unshift(obj);
@@ -28,6 +34,12 @@ store.session.where = (obj, cb) => {
   data = _.filter(data, obj);
 
   setTimeout(() => { cb(null, data); }, 500);
+};
+
+store.session.first = (obj, cb) => {
+  store.session.where(obj, (err, sessions) => {
+    cb(null, sessions[0]);    
+  });
 };
 
 store.session.create = (obj, cb) => {

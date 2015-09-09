@@ -3,6 +3,7 @@ let mui = require('material-ui');
 let Dialog = mui.Dialog;
 let _ = require('lodash');
 let store = require('../store');
+let moment = require('moment');
 let {
   Avatar,
   Card,
@@ -35,7 +36,7 @@ let SessionList = React.createClass({
   },
 
   _refresh() {
-    let clientId = +this.props.params.id;
+    let clientId = +this.props.client.id;
     store.session.where({clientId: clientId}, (err, sessions) => {
       if (this.isMounted()) {
         this.setState({sessions: sessions});
@@ -74,7 +75,7 @@ let SessionList = React.createClass({
             return (
               <Card initiallyExpanded={false} key={session.id}>
                 <CardTitle
-                  title={session.clientName + ' @ ' + session.time}
+                  title={moment(session.time).format(window.ft.conf.time.formats.dow)}
                   subtitle={session.duration + ' min'}
                   showExpandableButton={true}>
                 </CardTitle>
@@ -142,7 +143,7 @@ let SessionList = React.createClass({
 
   _createSession() {
     let newSession = {
-      clientId: +this.props.params.id,
+      clientId: +this.props.client.id,
       time: this._concatTime(),
       duration: this.refs.sessionDuration.getValue(),
       notes: this.refs.sessionNotes.getValue(),
@@ -156,7 +157,8 @@ let SessionList = React.createClass({
   },
 
   _concatTime() {
-    return this.refs.sessionDate.getDate() + ' ' + this.refs.sessionTime.getTime();
+    //TODO
+    return this.refs.sessionTime.getTime();
   }
 });
 

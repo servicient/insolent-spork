@@ -33,6 +33,7 @@
     "express": "^4.13.3",
     "lodash": "^3.10.1",
     "material-ui": ">=0.8",
+    "moment": "^2.10.6",
     "react": ">=0.13",
     "react-router": "^0.13.3",
     "react-tap-event-plugin": "^0.1.3"

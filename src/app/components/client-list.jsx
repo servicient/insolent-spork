@@ -2,6 +2,7 @@ let React = require('react');
 let mui = require('material-ui');
 let Dialog = mui.Dialog;
 let Link = require('react-router').Link;
+let Navigation = require('react-router').Navigation;
 let _ = require('lodash');
 let store = require('../store');
 
@@ -25,6 +26,7 @@ let {
 let Colors = mui.Styles.Colors;
 
 let ClientList = React.createClass({
+  mixins: [Navigation],
 
   getInitialState() {
     return {
@@ -84,14 +86,15 @@ let ClientList = React.createClass({
                   subtitleColor="white"
                   title={client.name}
                   subtitle="Next Session: 9/4, 8:00am"
-                  avatar={"http://lorempixel.com/100/100/people/" + client.id}
+                  avatar={client.avatar}
                   showExpandableButton={true}>
                 </CardHeader>
                 <CardActions expandable={true}>
                   <FlatButton label={client.email} primary={true}/>
                   <FlatButton label={client.phone} secondary={true}/>
-                  <Link to="clientSessions" params={{id: client.id}}>+ Add Session</Link>
-                  <Link to="clientProfile" params={{id: client.id}}>View Profile</Link>
+                  <RaisedButton label="View Profile" primary={true} 
+                    onTouchTap={this._nav("clientProfile", {id: client.id})}
+                  />
                 </CardActions>
               </Card>
             )
@@ -131,6 +134,12 @@ let ClientList = React.createClass({
         
       </div>
     );
+  },
+
+  _nav(pathName, args) {
+    return () => {
+      this.transitionTo(pathName, args);
+    };
   },
 
   _newClient() {
