@@ -37,7 +37,7 @@ let ClientList = React.createClass({
   },
 
   _refresh() {
-    store.client.all((err, clients) => {
+    store.client.where({}, (err, clients) => {
       if (this.isMounted()) {
         this.setState({clients: clients});
       }
@@ -60,7 +60,6 @@ let ClientList = React.createClass({
     return (
 
       <div className="center-block" style={containerStyle}>
-
         <div className="row">
           <div className="col-xs-12">
             <TextField
@@ -75,7 +74,7 @@ let ClientList = React.createClass({
           </div>
         </div>
 
-        {this.state.clients.map((client) => {
+        {this.state.clients.map(client => {
           if (client.id) {
             return (
               <Card initiallyExpanded={false} key={client.id}>
@@ -93,7 +92,6 @@ let ClientList = React.createClass({
                   <FlatButton label={client.phone} secondary={true}/>
                   <Link to="clientSessions" params={{id: client.id}}>+ Add Session</Link>
                   <Link to="clientProfile" params={{id: client.id}}>View Profile</Link>
-
                 </CardActions>
               </Card>
             )
@@ -141,16 +139,6 @@ let ClientList = React.createClass({
       let newList = [clientObj].concat(previousState.clients);
       return {clients: newList};
     });
-    // this.refs.addClientDialog.show();
-  },
-
-  _cancelCreate() {
-    let clientObj = {};
-    this.setState((previousState, currentProps) => {
-      let savedClients = (client) => { return client.id };
-      let newList = _.filter(previousState.clients, savedClients);
-      return {clients: newList};
-    });
   },
 
   _createClient() {
@@ -160,6 +148,10 @@ let ClientList = React.createClass({
       phone: this.refs.clientPhone.getValue(),
     };
     store.client.create(newClient, () => { this._refresh(); });
+  },
+
+  _cancelCreate() {
+    this._refresh();
   },
 
   _updateClient() {

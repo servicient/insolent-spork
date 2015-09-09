@@ -1,6 +1,8 @@
 let React = require('react');
 let mui = require('material-ui');
 let Dialog = mui.Dialog;
+let _ = require('lodash');
+let store = require('../store');
 let {
   Avatar,
   Card,
@@ -29,22 +31,16 @@ let SessionList = React.createClass({
   },
 
   componentDidMount() {
-    let clientId = this.props.params.clientId;
-    this.fetchSessions(clientId, function(err, sessions) {
-      console.log(sessions)
-      this.setState({ sessions: sessions });
-    }.bind(this));
+    this._refresh(); 
   },
 
-  fetchSessions: function(clientId, cb) {
-    cb(null, [
-      {
-        clientId: 1,
-        clientName: 'Andrew Marcus',
-        time: '2015-09-10 18:00:00',
-        duration: 60
-      }]
-    );
+  _refresh() {
+    let clientId = +this.props.params.id;
+    store.session.where({clientId: clientId}, (err, sessions) => {
+      if (this.isMounted()) {
+        this.setState({sessions: sessions});
+      }
+    }); 
   },
 
   render() {
@@ -60,34 +56,9 @@ let SessionList = React.createClass({
       paddingBottom: '70px',
     };
 
-    let addSessionActions = [
-      { text: 'Cancel' },
-      { text: 'Submit', onTouchTap: this._createSession, ref: 'sessionSubmit' }
-    ];
-
     return (
 
       <div className="center-block" style={containerStyle}>
-
-        <Dialog
-          title="Add Session"
-          actions={addSessionActions}
-          actionFocus="sessionSubmit"
-          autoScrollBodyContent={true}
-          ref="addSessionDialog">
-          <DatePicker hintText="Select Date" ref="sessionDate" />
-          <br />
-          <TimePicker
-            format="ampm"
-            ref="sessionTime"
-            hintText="Select Time" />
-          <br />
-          <TextField
-            hintText="Notes"
-            ref="sessionNotes"
-            multiLine={true} />
-        </Dialog>
-
         <div className="row">
           <div className="col-xs-12">
             <div className="pull-right">
@@ -98,36 +69,94 @@ let SessionList = React.createClass({
           </div>
         </div>
         
-        {this.state.sessions.map(function(session) {
-          return (
-            <Card initiallyExpanded={false} key={session.id}>
-              <CardTitle
-                title={session.clientName + ' @ ' + session.time}
-                subtitle={session.duration + ' min'}
-                showExpandableButton={true}>
-              </CardTitle>
-              <CardActions expandable={true}>
-                <FlatButton label="Reschedule" primary={true}/>
-                <FlatButton label="Cancel" secondary={true}/>
-              </CardActions>
-            </Card>
-          )
-        }.bind(this))}
+        {this.state.sessions.map(session => {
+          if (session.id) {
+            return (
+              <Card initiallyExpanded={false} key={session.id}>
+                <CardTitle
+                  title={session.clientName + ' @ ' + session.time}
+                  subtitle={session.duration + ' min'}
+                  showExpandableButton={true}>
+                </CardTitle>
+                <CardActions expandable={true}>
+                  <FlatButton label="Reschedule" primary={true} />
+                  <FlatButton label="Cancel" secondary={true} onTouchTap={this._cancelCreate} />
+                </CardActions>
+              </Card>
+            )
+          } else {
+            return (
+              <Card initiallyExpanded={true} key={0}>
+                <CardHeader
+                  title="NEW SESSION"
+                  titleColor="white"
+                  showExpandableButton={false}
+                  avatar={<Avatar>A</Avatar>}>
+                </CardHeader>
+                <CardText>
+                  <DatePicker 
+                    floatingLabelText="Select Date" 
+                    ref="sessionDate"
+                    autoOk={true} />
+                  <FontIcon className="material-icons">event</FontIcon>
+                  <br />
+                  <TimePicker
+                    format="ampm"
+                    ref="sessionTime"
+                    floatingLabelText="Select Time" />
+                  <FontIcon className="material-icons">schedule</FontIcon>
+                  <br />
+                  <TextField
+                    floatingLabelText="Amount ($)"
+                    ref="sessionAmount" />
+                  <br />
+                  <TextField
+                    floatingLabelText="Duration (min.)"
+                    ref="sessionDuration" />
+                  <br />
+                  <TextField
+                    floatingLabelText="Notes"
+                    ref="sessionNotes"
+                    multiLine={true} />
+                </CardText>
+                <CardActions expandable={true}>
+                  <FlatButton label="Save" primary={true} onTouchTap={this._createSession} />
+                  <FlatButton label="Cancel" secondary={true} onTouchTap={this._cancelCreate} />
+                </CardActions>
+              </Card>
+            )  
+          }
+        })}
 
       </div>
     );
   },
 
   _newSession() {
-    this.refs.addSessionDialog.show();
+    let sessionObj = {};
+    this.setState((previousState, currentProps) => {
+      let newList = [sessionObj].concat(previousState.sessions);
+      return {sessions: newList};
+    });
   },
 
   _createSession() {
-    console.log('session')
-    this.props.onAddSession(
-      
-    );
-    this.refs.addSessionDialog.dismiss();
+    let newSession = {
+      clientId: +this.props.params.id,
+      time: this._concatTime(),
+      duration: this.refs.sessionDuration.getValue(),
+      notes: this.refs.sessionNotes.getValue(),
+      amount: this.refs.sessionAmount.getValue()
+    };
+    store.session.create(newSession, () => { this._refresh(); });
+  },
+
+  _cancelCreate() {
+    this._refresh();
+  },
+
+  _concatTime() {
+    return this.refs.sessionDate.getDate() + ' ' + this.refs.sessionTime.getTime();
   }
 });
 
