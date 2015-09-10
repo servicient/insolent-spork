@@ -44,14 +44,14 @@ let EditSession = React.createClass({
             <TextField
               floatingLabelText="Amount ($)"
               ref="amount"
-              type="phone"
+              type="tel"
               defaultValue={session.amount} />
           </div>
           <div>
             <TextField
               floatingLabelText="Duration (minutes)"
               ref="duration"
-              type="phone"
+              type="tel"
               defaultValue={session.duration} />
           </div>
           <div>

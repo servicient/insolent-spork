@@ -106,11 +106,13 @@ let ClientList = React.createClass({
                   <br />
                   <TextField
                     ref="clientEmail"
+                    type="email"
                     floatingLabelText="Client's Email" />
                   <FontIcon className="material-icons">email</FontIcon>
                   <br />
                   <TextField
                     ref="clientPhone"
+                    type="tel"
                     floatingLabelText="Client's Phone" />
                   <FontIcon className="material-icons">phone</FontIcon>
                 </CardText>

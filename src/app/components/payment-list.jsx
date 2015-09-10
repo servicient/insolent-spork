@@ -84,13 +84,15 @@ let PaymentList = React.createClass({
                     step={10} 
                     style={{color: 'white', marginBottom: '0'}}
                     onChange={this._changeSlider} />
-                  <TextField
-                    floatingLabelText="Amount ($)"
-                    type="phone"
-                    ref="amount" />
+                  <div>
+                    <TextField
+                      floatingLabelText="Amount ($)"
+                      type="phone"
+                      ref="amount" />
+                  </div>
                   <TextField
                     floatingLabelText="Num. of Sessions"
-                    type="phone"
+                    type="tel"
                     ref="numSessions" />
                 </CardText>
                 <CardActions expandable={true}>
