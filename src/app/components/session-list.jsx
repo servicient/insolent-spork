@@ -111,7 +111,7 @@ let SessionList = React.createClass({
     this.setState({editingId: sessionId});
   },
 
-  _save: function (obj) {
+  _save(obj) {
     store.session.save(obj, () => { this._refresh(); });
   },
 
