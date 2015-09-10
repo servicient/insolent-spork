@@ -74,29 +74,24 @@ let PaymentList = React.createClass({
           } else {
             return (
               <Card initiallyExpanded={true} key={0}>
-                <CardHeader
-                  title="NEW PAYMENT"
-                  titleColor="white"
-                  showExpandableButton={false}
-                  avatar={<Avatar>A</Avatar>}>
-                </CardHeader>
                 <CardText>
                   <Slider
                     description="Slide to select amount"
                     max={1000}
                     min={10}
+                    defaultValue={500}
                     required={true}
                     step={10} 
-                    style={{width: '80%'}}
+                    style={{color: 'white', marginBottom: '0'}}
                     onChange={this._changeSlider} />
                   <TextField
                     floatingLabelText="Amount ($)"
+                    type="phone"
                     ref="amount" />
-                  <br />
                   <TextField
                     floatingLabelText="Num. of Sessions"
+                    type="phone"
                     ref="numSessions" />
-                  <br />
                 </CardText>
                 <CardActions expandable={true}>
                   <FlatButton label="Save" primary={true} onTouchTap={this._create} />

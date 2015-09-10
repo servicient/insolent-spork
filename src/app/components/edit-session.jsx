@@ -28,42 +28,40 @@ let EditSession = React.createClass({
     return (
       <Card initiallyExpanded={true} 
         key={this.props.isNew ? 0 : this.props.session.id}>
-        <CardHeader
-          title={this.props.isNew ? "New Session" : "Edit Session"}
-          titleColor="white"
-          showExpandableButton={false}
-          avatar={<Avatar>A</Avatar>}>
-        </CardHeader>
         <CardText>
           <DatePicker 
             floatingLabelText="Select Date" 
+            floatingLabelIcon=""
             ref="date"
             defaultDate={new Date(session.time)}
             autoOk={true} />
-          <FontIcon className="material-icons">event</FontIcon>
-          <br />
           <TimePicker
             format="ampm"
             ref="time"
             defaultTime={new Date(session.time)}
             floatingLabelText="Select Time" />
-          <FontIcon className="material-icons">schedule</FontIcon>
-          <br />
-          <TextField
-            floatingLabelText="Amount ($)"
-            ref="amount"
-            defaultValue={session.amount} />
-          <br />
-          <TextField
-            floatingLabelText="Duration (minutes)"
-            ref="duration"
-            defaultValue={session.duration} />
-          <br />
-          <TextField
-            floatingLabelText="Notes"
-            ref="notes"
-            defaultValue={session.notes}
-            multiLine={true} />
+          <div>
+            <TextField
+              floatingLabelText="Amount ($)"
+              ref="amount"
+              type="phone"
+              defaultValue={session.amount} />
+          </div>
+          <div>
+            <TextField
+              floatingLabelText="Duration (minutes)"
+              ref="duration"
+              type="phone"
+              defaultValue={session.duration} />
+          </div>
+          <div>
+            <TextField
+              floatingLabelText="Notes"
+              ref="notes"
+              type="text"
+              defaultValue={session.notes}
+              multiLine={true} />
+          </div>
         </CardText>
         <CardActions expandable={true}>
           <FlatButton label="Save" primary={true} onTouchTap={this._save} />
