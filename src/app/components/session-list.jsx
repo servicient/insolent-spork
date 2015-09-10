@@ -85,6 +85,8 @@ let SessionList = React.createClass({
                 <CardActions expandable={true}>
                   <FlatButton label="Reschedule" primary={true} 
                     onTouchTap={this._edit.bind(this, session.id)} />
+                  <FlatButton label="Confirm" primary={true}
+                    onTouchTap={this._confirmSession} />
                   <FlatButton label="Cancel" secondary={true}
                     onTouchTap={this._cancelSession} />
                 </CardActions>
@@ -117,8 +119,13 @@ let SessionList = React.createClass({
     this._refresh();
   },
 
-   _cancelSession() {
+  _cancelSession() {
     alert('TODO')
+  },
+
+  _confirmSession() {
+    if (confirm('Are you sure?'))
+      alert('TODO')
   }
 });
 
