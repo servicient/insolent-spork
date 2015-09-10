@@ -7,13 +7,16 @@
   let Sidebar = require('./components/sidebar');
   let ClientProfile = require('./components/client-profile');
   let mockData = require('./mock-data');
-
   let mui = require('material-ui');
+  let {
+    AppBar,
+  } = mui;
+
   let ThemeManager = new mui.Styles.ThemeManager();
   
   // Routing
   let Router = require('react-router');
-  let { Route, DefaultRoute, RouteHandler, Link } = Router;
+  let { Route, State, DefaultRoute, RouteHandler, Link } = Router;
 
   //Needed for React Developer Tools
   window.React = React;
@@ -51,7 +54,15 @@
       ThemeManager.setTheme(ThemeManager.types.DARK);
     },
 
+    mixins: [State],
+
     render () {
+
+      let title =
+        this.context.router.isActive('clients') ? 'Main' :
+        this.context.router.isActive('clientSessions') ? '' :
+        this.context.router.isActive('clientProfile') ? 'Client Name' : '';
+
       return (
         <div className="main">
           <div className="container">
@@ -60,6 +71,9 @@
                 <Sidebar />
               </div>
               <div className="col-sm-12 col-md-8" style={{padding: 0}} >
+                <AppBar title={title}
+                    style={{backgroundColor: '#151515', textAlign: 'center'}}
+                    showMenuIconButton={false} />
                 <RouteHandler/>
               </div>
             </div>

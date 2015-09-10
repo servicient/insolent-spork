@@ -54,13 +54,9 @@ let ClientList = React.createClass({
       fontWeight: '300',
     };
 
-
     return (
 
       <div>
-        <AppBar title="FitnessTrainer!"
-          style={{backgroundColor: '#151515'}}
-          showMenuIconButton={false} />
         <div className="text-center well-sm">
           <RaisedButton label="Add Client" primary={true} onTouchTap={this._newClient} labelStyle={buttonLabelStyle} >
             <FontIcon className="glyphicon glyphicon-plus pull-left" style={{color:"white", padding: "8px 0 8px 8px", fontSize: '18px'}} />
@@ -84,8 +80,7 @@ let ClientList = React.createClass({
                   <FlatButton label={client.email} primary={true}/>
                   <FlatButton label={client.phone} secondary={true}/>
                   <RaisedButton label="View Profile" primary={true} 
-                    onTouchTap={this._nav("clientProfile", {id: client.id})}
-                  />
+                    onTouchTap={this._nav("clientProfile", {id: client.id})} />
                 </CardActions>
               </Card>
             )
