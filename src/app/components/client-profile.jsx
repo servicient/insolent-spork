@@ -33,7 +33,7 @@ let ClientProfile = React.createClass({
       if (this.isMounted()) {
         this.setState({client: client});
       }
-    });=]
+    });
   },
 
 
