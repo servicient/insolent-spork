@@ -1,6 +1,5 @@
 let React = require('react');
 let mui = require('material-ui');
-let Dialog = mui.Dialog;
 let _ = require('lodash');
 let store = require('../store');
 let moment = require('moment');
@@ -22,6 +21,7 @@ let {
   TimePicker
 } = mui;
 let Colors = mui.Styles.Colors;
+let EditSession = require('./edit-session');
 
 let SessionList = React.createClass({
 
@@ -39,7 +39,7 @@ let SessionList = React.createClass({
     let clientId = +this.props.client.id;
     store.session.where({clientId: clientId}, (err, sessions) => {
       if (this.isMounted()) {
-        this.setState({sessions: sessions});
+        this.setState({sessions: sessions, editingId: null});
       }
     }); 
   },
@@ -62,7 +62,16 @@ let SessionList = React.createClass({
         </div>
         
         {this.state.sessions.map(session => {
-          if (session.id) {
+          let editable = (this.state.editingId === session.id) || !session.id;
+          if (editable) {
+            return (
+              <EditSession isNew={!session.id} 
+                session={session.id ? session : store.session.init()}
+                client={this.props.client} 
+                onSave={this._save}
+                onCancel={this._cancelSave} />
+            );
+          } else {
             return (
               <Card initiallyExpanded={false} key={session.id}>
                 <CardTitle
@@ -74,52 +83,13 @@ let SessionList = React.createClass({
                   showExpandableButton={true}>
                 </CardTitle>
                 <CardActions expandable={true}>
-                  <FlatButton label="Reschedule" primary={true} />
-                  <FlatButton label="Cancel" secondary={true} onTouchTap={this._cancelCreate} />
+                  <FlatButton label="Reschedule" primary={true} 
+                    onTouchTap={this._edit.bind(this, session.id)} />
+                  <FlatButton label="Cancel" secondary={true}
+                    onTouchTap={this._cancelSession} />
                 </CardActions>
               </Card>
-            )
-          } else {
-            return (
-              <Card initiallyExpanded={true} key={0}>
-                <CardHeader
-                  title="NEW SESSION"
-                  titleColor="white"
-                  showExpandableButton={false}
-                  avatar={<Avatar>A</Avatar>}>
-                </CardHeader>
-                <CardText>
-                  <DatePicker 
-                    floatingLabelText="Select Date" 
-                    ref="sessionDate"
-                    autoOk={true} />
-                  <FontIcon className="material-icons">event</FontIcon>
-                  <br />
-                  <TimePicker
-                    format="ampm"
-                    ref="sessionTime"
-                    floatingLabelText="Select Time" />
-                  <FontIcon className="material-icons">schedule</FontIcon>
-                  <br />
-                  <TextField
-                    floatingLabelText="Amount ($)"
-                    ref="sessionAmount" />
-                  <br />
-                  <TextField
-                    floatingLabelText="Duration (min.)"
-                    ref="sessionDuration" />
-                  <br />
-                  <TextField
-                    floatingLabelText="Notes"
-                    ref="sessionNotes"
-                    multiLine={true} />
-                </CardText>
-                <CardActions expandable={true}>
-                  <FlatButton label="Save" primary={true} onTouchTap={this._createSession} />
-                  <FlatButton label="Cancel" secondary={true} onTouchTap={this._cancelCreate} />
-                </CardActions>
-              </Card>
-            )  
+            );
           }
         })}
 
@@ -128,31 +98,27 @@ let SessionList = React.createClass({
   },
 
   _newSession() {
-    let sessionObj = {};
+    let sessionObj = store.session.init();
     this.setState((previousState, currentProps) => {
       let newList = [sessionObj].concat(previousState.sessions);
       return {sessions: newList};
     });
   },
 
-  _createSession() {
-    let newSession = {
-      clientId: +this.props.client.id,
-      time: this._concatTime(),
-      duration: this.refs.sessionDuration.getValue(),
-      notes: this.refs.sessionNotes.getValue(),
-      amount: this.refs.sessionAmount.getValue()
-    };
-    store.session.create(newSession, () => { this._refresh(); });
+  _edit(sessionId) {
+    this.setState({editingId: sessionId});
   },
 
-  _cancelCreate() {
+  _save: function (obj) {
+    store.session.save(obj, () => { this._refresh(); });
+  },
+
+  _cancelSave() {
     this._refresh();
   },
 
-  _concatTime() {
-    //TODO
-    return this.refs.sessionTime.getTime();
+   _cancelSession() {
+    alert('TODO')
   }
 });
 

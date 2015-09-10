@@ -22,6 +22,18 @@ let store = module.exports = {
   },
 
   session: {
+    init: () => (
+      {
+        id: null,
+        clientId: null,
+        time: new Date,
+        state: null,
+        amount: null,
+        duration: null,
+        notes: null
+      }
+    ),
+
     where: (obj, cb) => {
       let data = window.ft.mockData.sessions;
       data = _.filter(data, obj);
@@ -35,12 +47,29 @@ let store = module.exports = {
       });
     },
 
+    save: (obj, cb) => {
+      if (obj.id) {
+        store.session.update(obj, cb);
+      } else {
+        store.session.create(obj, cb);
+      }
+    },
+
     create: (obj, cb) => {
       obj.id = +new Date; //TODO
       obj.state = 'scheduled'; //TODO
       window.ft.mockData.sessions.unshift(obj);
       if (cb)
         setTimeout(() => { cb(null, obj); }, 500);
+    },
+
+    update: (obj, cb) => {
+      store.session.first({id: obj.id}, (err, session) => {
+        // TODO: use return value?
+        _.merge(obj, session);
+        if (cb)
+          setTimeout(() => { cb(null, obj); }, 500);
+      });
     }
   },
 
