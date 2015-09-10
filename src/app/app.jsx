@@ -121,13 +121,12 @@
     render () {
       return (
         <div className="main">
-          <Header />
           <div className="container">
             <div className="row">
               <div className="hidden-xs hidden-sm col-md-4">
                 <Sidebar />
               </div>
-              <div className="col-sm-12 col-md-8">
+              <div className="col-sm-12 col-md-8" style={{padding: 0}} >
                 <RouteHandler/>
               </div>
             </div>

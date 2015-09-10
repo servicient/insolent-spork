@@ -48,22 +48,13 @@ let PaymentList = React.createClass({
       fontWeight: '300',
     };
 
-    let containerStyle = {
-      textAlign: 'center',
-      paddingBottom: '70px',
-    };
-
     return (
 
-      <div className="center-block" style={containerStyle}>
-        <div className="row">
-          <div className="col-xs-12">
-            <div className="pull-right">
-              <RaisedButton label="Add Payment" primary={true} onTouchTap={this._newPayment} labelStyle={buttonLabelStyle} >
-                <FontIcon className="glyphicon glyphicon-plus pull-left" style={{color:"white", padding: "8px 0 8px 8px", fontSize: '18px'}} />
-              </RaisedButton>
-            </div>
-          </div>
+      <div>
+        <div className="text-center well-sm">
+          <RaisedButton label="Add Payment" primary={true} onTouchTap={this._newPayment} labelStyle={buttonLabelStyle} >
+            <FontIcon className="glyphicon glyphicon-plus pull-left" style={{color:"white", padding: "8px 0 8px 8px", fontSize: '18px'}} />
+          </RaisedButton>
         </div>
         
         {this.state.payments.map(payment => {

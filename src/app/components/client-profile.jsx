@@ -7,6 +7,7 @@ let PaymentList = require("./payment-list");
 let store = require("../store");
 
 let {
+  AppBar,
   Tabs,
   Tab,
   Avatar
@@ -30,17 +31,19 @@ let ClientProfile = React.createClass({
     });
   },
 
+
+
   render() {
+
+    let tabsStyle ={
+      backgroundColor: '#151515'
+    };
 
     if (this.state.client) /* init render (no client yet) */ {
       return (
-        <div className="profile-intro" style={{color: "white"}}>
-          <h3>
-            <Avatar src={this.state.client.avatar} />
-            {this.state.client.name}
-          </h3>
-
-          <Tabs>
+        <div>
+          <AppBar title={this.state.client.name} style={{backgroundColor: '#151515'}} />
+          <Tabs tabItemContainerStyle={tabsStyle} >
             <Tab label="Sessions">
               <SessionList client={this.state.client} />
             </Tab>
