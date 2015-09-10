@@ -1,8 +1,7 @@
 let React = require('react');
 let mui = require('material-ui');
 let Dialog = mui.Dialog;
-let Link = require('react-router').Link;
-let Navigation = require('react-router').Navigation;
+let Common = require("./common");
 let _ = require('lodash');
 let store = require('../store');
 
@@ -26,7 +25,7 @@ let {
 let Colors = mui.Styles.Colors;
 
 let ClientList = React.createClass({
-  mixins: [Navigation],
+  mixins: [Common],
 
   getInitialState() {
     return {
@@ -134,12 +133,6 @@ let ClientList = React.createClass({
         
       </div>
     );
-  },
-
-  _nav(pathName, args) {
-    return () => {
-      this.transitionTo(pathName, args);
-    };
   },
 
   _newClient() {

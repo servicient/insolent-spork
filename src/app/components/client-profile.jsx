@@ -1,7 +1,6 @@
 let React = require("react");
 let mui = require("material-ui");
-let { Link, Navigation } = require("react-router");
-// let SessionsTable = require('./sessions-table');
+let Common = require("./common");
 let SessionList = require("./session-list");
 let PaymentList = require("./payment-list");
 let store = require("../store");
@@ -19,8 +18,8 @@ let {
 let Colors = mui.Styles.Colors;
 
 let ClientProfile = React.createClass({
-
-  mixins: [Navigation],
+  
+  mixins: [Common],
 
   getInitialState() {
     return {
@@ -35,8 +34,6 @@ let ClientProfile = React.createClass({
       }
     });
   },
-
-
 
   render() {
 
@@ -63,12 +60,7 @@ let ClientProfile = React.createClass({
     } else {
       return null;
     }
-  },
-  _nav(pathName, args) {
-    return () => {
-      this.transitionTo(pathName, args);
-    };
-  },
+  }
 });
 
 module.exports = ClientProfile;
