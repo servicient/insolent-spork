@@ -48,10 +48,11 @@ let store = module.exports = {
     },
 
     save: (obj, cb) => {
+      let session = store.session;
       if (obj.id) {
-        store.session.update(obj, cb);
+        session.update(obj, cb);
       } else {
-        store.session.create(obj, cb);
+        session.create(obj, cb);
       }
     },
 
@@ -65,8 +66,7 @@ let store = module.exports = {
 
     update: (obj, cb) => {
       store.session.first({id: obj.id}, (err, session) => {
-        // TODO: use return value?
-        _.merge(obj, session);
+        _.merge(session, obj);
         if (cb)
           setTimeout(() => { cb(null, obj); }, 500);
       });

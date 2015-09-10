@@ -74,14 +74,15 @@ let EditSession = React.createClass({
   },
 
   _save() {
-    let newSession = {
+    let obj = {
+      id: this.props.session.id,
       clientId: +this.props.client.id,
       time: this._concatTime(),
       duration: this.refs.duration.getValue(),
       amount: this.refs.amount.getValue(),
       notes: this.refs.notes.getValue()
     };
-    this.props.onSave(newSession);
+    this.props.onSave(obj);
   },
 
   _cancel() {
