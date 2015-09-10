@@ -42,11 +42,20 @@
     }
   ];
 
+  window.PAYMENTS = [
+    {
+      id: 100,
+      clientId: 1,
+      amount: '200.00',
+      numSessions: 4,
+      time: '2015-09-01 18:00:00'
+    }
+  ];
+
   window.SESSIONS = [
     {
       id: 10,
       clientId: 1,
-      clientName: 'Andrew Marcus',
       time: '2015-09-10 18:00:00',
       state: 'scheduled',
       amount: '50.00',
@@ -55,7 +64,6 @@
     {
       id: 11,
       clientId: 1,
-      clientName: 'Andrew Marcus',
       time: '2015-09-01 18:00:00',
       state: 'paid',
       amount: '50.00',
@@ -64,7 +72,6 @@
     {
       id: 12,
       clientId: 1,
-      clientName: 'Andrew Marcus',
       time: '2015-09-11 18:00:00',
       state: 'scheduled',
       amount: '50.00',
@@ -73,7 +80,6 @@
     {
       id: 13,
       clientId: 2,
-      clientName: 'Jesse Silkoff',
       time: '2015-09-12 18:00:00',
       state: 'scheduled',
       amount: '50.00',

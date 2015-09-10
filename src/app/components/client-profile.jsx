@@ -2,7 +2,8 @@ let React = require("react");
 let mui = require("material-ui");
 let Link = require("react-router").Link;
 // let SessionsTable = require('./sessions-table');
-let SessionsList = require("./session-list");
+let SessionList = require("./session-list");
+let PaymentList = require("./payment-list");
 let store = require("../store");
 
 let {
@@ -31,16 +32,22 @@ let ClientProfile = React.createClass({
 
   render() {
 
-    if (this.state.client) {
+    if (this.state.client) /* init render (no client yet) */ {
       return (
-        <div>
-          <div className="profile-intro" style={{color: "white"}}>
-            <h3>
-              <Avatar src={this.state.client.avatar} />
-              {this.state.client.name}
-            </h3>
-            <SessionsList client={this.state.client} />
-          </div>
+        <div className="profile-intro" style={{color: "white"}}>
+          <h3>
+            <Avatar src={this.state.client.avatar} />
+            {this.state.client.name}
+          </h3>
+
+          <Tabs>
+            <Tab label="Sessions">
+              <SessionList client={this.state.client} />
+            </Tab>
+            <Tab label="Payments">
+              <PaymentList client={this.state.client} />
+            </Tab>
+          </Tabs>
         </div>
       );
     } else {
