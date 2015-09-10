@@ -91,15 +91,15 @@ let PaymentList = React.createClass({
                     onChange={this._changeSlider} />
                   <TextField
                     floatingLabelText="Amount ($)"
-                    ref="paymentAmount" />
+                    ref="amount" />
                   <br />
                   <TextField
                     floatingLabelText="Num. of Sessions"
-                    ref="paymentNumSessions" />
+                    ref="numSessions" />
                   <br />
                 </CardText>
                 <CardActions expandable={true}>
-                  <FlatButton label="Save" primary={true} onTouchTap={this._createPayment} />
+                  <FlatButton label="Save" primary={true} onTouchTap={this._create} />
                   <FlatButton label="Cancel" secondary={true} onTouchTap={this._cancelCreate} />
                 </CardActions>
               </Card>
@@ -112,7 +112,7 @@ let PaymentList = React.createClass({
   },
 
   _changeSlider: function (e, val) {
-    this.refs.paymentAmount.setValue(val);
+    this.refs.amount.setValue(val);
   },
 
   _newPayment() {
@@ -123,11 +123,11 @@ let PaymentList = React.createClass({
     });
   },
 
-  _createPayment() {
+  _create() {
     let newPayment = {
       clientId: +this.props.client.id,
-      amount: this.refs.paymentAmount.getValue(),
-      numSessions: this.refs.paymentNumSessions.getValue()
+      amount: this.refs.amount.getValue(),
+      numSessions: this.refs.numSessions.getValue()
     };
     store.payment.create(newPayment, () => { this._refresh(); });
   },
