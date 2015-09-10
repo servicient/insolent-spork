@@ -64,6 +64,9 @@ let PaymentList = React.createClass({
                 <CardTitle
                   title={moment(payment.time).format(window.ft.conf.time.formats.dow)}
                   subtitle={"$" + payment.amount}
+                  style={{fontWeight: 200}}
+                  titleColor="white"
+                  subtitleColor="white"
                   showExpandableButton={false}>
                 </CardTitle>
               </Card>

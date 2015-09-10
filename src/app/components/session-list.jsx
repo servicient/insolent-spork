@@ -66,6 +66,9 @@ let SessionList = React.createClass({
             return (
               <Card initiallyExpanded={false} key={session.id}>
                 <CardTitle
+                  style={{fontWeight: 200}}
+                  titleColor="white"
+                  subtitleColor="white"
                   title={moment(session.time).format(window.ft.conf.time.formats.dow)}
                   subtitle={session.duration + ' min'}
                   showExpandableButton={true}>
