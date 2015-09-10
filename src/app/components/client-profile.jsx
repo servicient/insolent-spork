@@ -1,21 +1,26 @@
 let React = require("react");
 let mui = require("material-ui");
-let Link = require("react-router").Link;
+let { Link, Navigation } = require("react-router");
 // let SessionsTable = require('./sessions-table');
 let SessionList = require("./session-list");
 let PaymentList = require("./payment-list");
 let store = require("../store");
 
+
 let {
   AppBar,
   Tabs,
   Tab,
+  FontIcon,
+  IconButton,
   Avatar
 } = mui;
 
 let Colors = mui.Styles.Colors;
 
 let ClientProfile = React.createClass({
+
+  mixins: [Navigation],
 
   getInitialState() {
     return {
@@ -28,7 +33,7 @@ let ClientProfile = React.createClass({
       if (this.isMounted()) {
         this.setState({client: client});
       }
-    });
+    });=]
   },
 
 
@@ -42,7 +47,9 @@ let ClientProfile = React.createClass({
     if (this.state.client) /* init render (no client yet) */ {
       return (
         <div>
-          <AppBar title={this.state.client.name} style={{backgroundColor: '#151515'}} />
+          <AppBar title={this.state.client.name} 
+            iconElementLeft={<FontIcon className="material-icons" onTouchTap={this._nav("clients")} style={{fontSize: "30px"}} >navigate_before</FontIcon>}
+            style={{backgroundColor: '#151515'}} />
           <Tabs tabItemContainerStyle={tabsStyle} >
             <Tab label="Sessions">
               <SessionList client={this.state.client} />
@@ -56,7 +63,12 @@ let ClientProfile = React.createClass({
     } else {
       return null;
     }
-  }
+  },
+  _nav(pathName, args) {
+    return () => {
+      this.transitionTo(pathName, args);
+    };
+  },
 });
 
 module.exports = ClientProfile;
