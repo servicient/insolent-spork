@@ -10,6 +10,7 @@
 
   let mui = require('material-ui');
   let ThemeManager = new mui.Styles.ThemeManager();
+  let Colors = mui.Styles.Colors;
   
   // Routing
   let Router = require('react-router');
@@ -48,6 +49,9 @@
     },
 
     componentWillMount () {
+      ThemeManager.setPalette({
+        accent1Color: Colors.blueA400,
+      });
       ThemeManager.setTheme(ThemeManager.types.DARK);
     },
 

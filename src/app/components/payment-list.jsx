@@ -75,19 +75,22 @@ let PaymentList = React.createClass({
             return (
               <Card initiallyExpanded={true} key={0}>
                 <CardText>
-                  <Slider
-                    description="Slide to select amount"
-                    max={1000}
-                    min={10}
-                    defaultValue={500}
-                    required={true}
-                    step={10} 
-                    style={{color: 'white', marginBottom: '0'}}
-                    onChange={this._changeSlider} />
                   <div>
+                    <div style={{color: 'white', textAlign: 'center'}}>
+                      Add Amount to Balance
+                    </div>
+                    <Slider
+                      max={1000}
+                      min={10}
+                      defaultValue={500}
+                      required={true}
+                      step={10} 
+                      style={{width: '80%', display: 'inline-block', marginBottom: '10px'}}
+                      onChange={this._changeSlider} />
                     <TextField
-                      floatingLabelText="Amount ($)"
-                      type="phone"
+                      style={{width: '20%', verticalAlign: 'top'}}
+                      hintText="$"
+                      type="tel"
                       ref="amount" />
                   </div>
                   <TextField

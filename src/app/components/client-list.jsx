@@ -54,6 +54,11 @@ let ClientList = React.createClass({
       fontWeight: '300',
     };
 
+    let iconStyle = {
+      paddingRight: '5px',
+      verticalAlign: 'middle',
+    }
+
 
     return (
 
@@ -92,31 +97,29 @@ let ClientList = React.createClass({
           } else {
             return (
               <Card initiallyExpanded={true} key={0}>
-                <CardHeader
-                  title="NEW CLIENT"
-                  titleColor="white"
-                  showExpandableButton={false}
-                  avatar={<Avatar>A</Avatar>}>
-                </CardHeader>
                 <CardText>
-                  <TextField
-                    ref="clientName"
-                    floatingLabelText="Client's Name" />
-                  <FontIcon className="material-icons">face</FontIcon>
-                  <br />
-                  <TextField
-                    ref="clientEmail"
-                    type="email"
-                    floatingLabelText="Client's Email" />
-                  <FontIcon className="material-icons">email</FontIcon>
-                  <br />
-                  <TextField
-                    ref="clientPhone"
-                    type="tel"
-                    floatingLabelText="Client's Phone" />
-                  <FontIcon className="material-icons">phone</FontIcon>
+                  <div>
+                    <FontIcon className="material-icons" style={iconStyle}>person</FontIcon>
+                    <TextField
+                      ref="clientName"
+                      hintText="Client's Name" />
+                  </div>
+                  <div>
+                    <FontIcon className="material-icons" style={iconStyle}>email</FontIcon>
+                    <TextField
+                      ref="clientEmail"
+                      type="email"
+                      hintText="Client's Email" />
+                  </div>
+                  <div>
+                    <FontIcon className="material-icons" style={iconStyle}>phone</FontIcon>
+                    <TextField
+                      ref="clientPhone"
+                      type="tel"
+                      hintText="Client's Phone" />
+                  </div>
                 </CardText>
-                <CardActions expandable={true}>
+                <CardActions expandable={true} style={{textAlign: 'center'}} >
                   <FlatButton label="Save" primary={true} onTouchTap={this._createClient} />
                   <FlatButton label="Cancel" secondary={true} onTouchTap={this._cancelCreate} />
                 </CardActions>
