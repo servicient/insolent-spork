@@ -1,11 +1,12 @@
 {
-  "name": "material-ui-example",
+  "name": "FitnessTrainer 2",
   "version": "0.1.0",
   "engines": {
-    "node": "0.12.7"
+    "node": "0.12.7",
+    "npm": "^2.11.0"
   },
   "private": true,
-  "description": "Sample project that uses material-ui",
+  "description": "FitnessTrainer with more swole",
   "repository": {
     "type": "git",
     "url": "https://github.com/servicient/insolent-spork"
