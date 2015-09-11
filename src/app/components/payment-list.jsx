@@ -23,12 +23,12 @@ let PaymentList = React.createClass({
 
   getInitialState () {
     return {
-      payments: []  
+      payments: []
     };
   },
 
   componentDidMount() {
-    this._refresh(); 
+    this._refresh();
   },
 
   _refresh() {
@@ -37,7 +37,7 @@ let PaymentList = React.createClass({
       if (this.isMounted()) {
         this.setState({payments: payments});
       }
-    }); 
+    });
   },
 
   render() {
@@ -56,7 +56,7 @@ let PaymentList = React.createClass({
             <FontIcon className="glyphicon glyphicon-plus pull-left" style={{color:"white", padding: "8px 0 8px 8px", fontSize: '18px'}} />
           </RaisedButton>
         </div>
-        
+
         {this.state.payments.map(payment => {
           if (payment.id) {
             return (
@@ -82,14 +82,16 @@ let PaymentList = React.createClass({
                     <Slider
                       max={1000}
                       min={10}
-                      defaultValue={500}
-                      required={true}
-                      step={10} 
-                      style={{width: '80%', display: 'inline-block', marginBottom: '10px'}}
+                      name="amountSlider"
+                      defaultValue={payment.amount}
+                      step={10}
+                      style={{width: '80%', display: 'inline-block', marginBottom: 10}}
                       onChange={this._changeSlider} />
                     <TextField
                       style={{width: '20%', verticalAlign: 'top'}}
+                      required={true}
                       hintText="$"
+                      defaultValue={payment.amount}
                       type="tel"
                       ref="amount" />
                   </div>
@@ -103,7 +105,7 @@ let PaymentList = React.createClass({
                   <FlatButton label="Cancel" secondary={true} onTouchTap={this._cancelCreate} />
                 </CardActions>
               </Card>
-            )  
+            )
           }
         })}
 
@@ -111,12 +113,12 @@ let PaymentList = React.createClass({
     );
   },
 
-  _changeSlider: function (e, val) {
+  _changeSlider(e, val) {
     this.refs.amount.setValue(val);
   },
 
   _newPayment() {
-    let paymentObj = {};
+    let paymentObj = store.payment.init();
     this.setState((previousState, currentProps) => {
       let newList = [paymentObj].concat(previousState.payments);
       return {payments: newList};

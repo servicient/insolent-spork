@@ -1,20 +1,20 @@
 let _ = require('lodash');
 let store = module.exports = {
   client: {
-    where: (obj, cb) => {
+    where(obj, cb) {
       let data = window.ft.mockData.clients;
       data = _.filter(data, obj);
 
       setTimeout(() => { cb(null, data); }, 500);
     },
 
-    first: (obj, cb) => {
-      store.client.where(obj, (err, clients) => {
+    first(obj, cb) {
+      this.where(obj, (err, clients) => {
         cb(null, clients[0]);
       });
     },
 
-    create: (obj, cb) => {
+    create(obj, cb) {
       obj.id = +new Date; //TODO
       window.ft.mockData.clients.unshift(obj);
       if (cb)
@@ -35,20 +35,20 @@ let store = module.exports = {
       }
     ),
 
-    where: (obj, cb) => {
+    where(obj, cb) {
       let data = window.ft.mockData.sessions;
       data = _.filter(data, obj);
 
       setTimeout(() => { cb(null, data); }, 500);
     },
 
-    first: (obj, cb) => {
-      store.session.where(obj, (err, sessions) => {
+    first(obj, cb) {
+      this.where(obj, (err, sessions) => {
         cb(null, sessions[0]);
       });
     },
 
-    save: (obj, cb) => {
+    save(obj, cb) {
       let session = store.session;
       if (obj.id) {
         session.update(obj, cb);
@@ -57,7 +57,7 @@ let store = module.exports = {
       }
     },
 
-    create: (obj, cb) => {
+    create(obj, cb) {
       obj.id = +new Date; //TODO
       obj.state = 'scheduled'; //TODO
       window.ft.mockData.sessions.unshift(obj);
@@ -65,8 +65,8 @@ let store = module.exports = {
         setTimeout(() => { cb(null, obj); }, 500);
     },
 
-    update: (obj, cb) => {
-      store.session.first({id: obj.id}, (err, session) => {
+    update(obj, cb) {
+      this.first({id: obj.id}, (err, session) => {
         _.merge(session, obj);
         if (cb)
           setTimeout(() => { cb(null, obj); }, 500);
@@ -75,20 +75,30 @@ let store = module.exports = {
   },
 
   payment: {
-    where: (obj, cb) => {
+    init: () => (
+      {
+        id: null,
+        clientId: null,
+        time: null,
+        amount: 500,
+        numSessions: null
+      }
+    ),
+
+    where(obj, cb) {
       let data = window.ft.mockData.payments;
       data = _.filter(data, obj);
 
       setTimeout(() => { cb(null, data); }, 500);
     },
 
-    first: (obj, cb) => {
-      store.payment.where(obj, (err, payments) => {
+    first(obj, cb) {
+      this.where(obj, (err, payments) => {
         cb(null, payments[0]);
       });
     },
 
-    create: (obj, cb) => {
+    create(obj, cb) {
       obj.id = +new Date; //TODO
       obj.time = new Date;
       window.ft.mockData.payments.unshift(obj);
