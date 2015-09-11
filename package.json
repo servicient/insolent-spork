@@ -1,9 +1,9 @@
 {
-  "name": "FitnessTrainer 2",
+  "name": "fitness-trainer-tools",
   "version": "0.1.0",
   "engines": {
     "node": "0.12.7",
-    "npm": "^2.11.0"
+    "npm": "~2.11.0"
   },
   "private": true,
   "description": "FitnessTrainer with more swole",
