@@ -14,7 +14,7 @@
 
   let ThemeManager = new mui.Styles.ThemeManager();
   let Colors = mui.Styles.Colors;
-  
+
   // Routing
   let Router = require('react-router');
   let { Route, State, DefaultRoute, RouteHandler, Link } = Router;
@@ -104,7 +104,7 @@
                 <Sidebar />
               </div>
               <div className="col-sm-12 col-md-8" style={{padding: 0}} >
-                <AppBar title={title}
+                <AppBar title={this.state.title}
                     style={{backgroundColor: '#151515', textAlign: 'center'}}
                     showMenuIconButton={false} />
                 <RouteHandler/>

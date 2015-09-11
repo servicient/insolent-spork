@@ -37,18 +37,24 @@ let ClientProfile = React.createClass({
 
   render() {
 
-    let tabsStyle ={
+    let tabsStyle = {
       backgroundColor: '#151515'
     };
 
     if (this.state.client) /* init render (no client yet) */ {
       return (
         <div>
-          <Tabs tabItemContainerStyle={tabsStyle} >
-            <Tab label="Sessions">
-              <SessionList client={this.state.client} />
+          <Tabs tabItemContainerStyle={tabsStyle} onChange={this._tabChange}>
+            <Tab label="Scheduled" value="scheduled">
+              <SessionList type="scheduled" client={this.state.client} />
             </Tab>
-            <Tab label="Payments">
+            <Tab label="Completed" value="completed">
+              <SessionList ref="completedSessions"
+                type="completed"
+                readOnly={true}
+                client={this.state.client} />
+            </Tab>
+            <Tab label="Payments" value="payments">
               <PaymentList client={this.state.client} />
             </Tab>
           </Tabs>
@@ -57,6 +63,12 @@ let ClientProfile = React.createClass({
     } else {
       return null;
     }
+  },
+
+  _tabChange(value, e, tab) {
+    // if the user just confirmed a session, then refresh completed view
+    if (value === 'completed')
+      this.refs.completedSessions._refresh();
   }
 });
 

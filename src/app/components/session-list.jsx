@@ -27,21 +27,22 @@ let SessionList = React.createClass({
 
   getInitialState () {
     return {
-      sessions: []  
+      sessions: []
     };
   },
 
   componentDidMount() {
-    this._refresh(); 
+    this._refresh();
   },
 
   _refresh() {
-    let clientId = +this.props.client.id;
-    store.session.where({clientId: clientId}, (err, sessions) => {
+    let clientId = +this.props.client.id,
+      filter = {clientId: clientId, state: this.props.type};
+    store.session.where(filter, (err, sessions) => {
       if (this.isMounted()) {
         this.setState({sessions: sessions, editingId: null});
       }
-    }); 
+    });
   },
 
   render() {
@@ -55,19 +56,22 @@ let SessionList = React.createClass({
     return (
 
       <div>
-        <div className="text-center well-sm">
-          <RaisedButton label="Add Session" primary={true} onTouchTap={this._newSession} labelStyle={buttonLabelStyle} >
-            <FontIcon className="glyphicon glyphicon-plus pull-left" style={{color:"white", padding: "8px 0 8px 8px", fontSize: '18px'}} />
-          </RaisedButton>
-        </div>
-        
+        {this.props.readOnly ?
+          null :
+          <div className="text-center well-sm">
+            <RaisedButton label="Add Session" primary={true} onTouchTap={this._newSession} labelStyle={buttonLabelStyle} >
+              <FontIcon className="glyphicon glyphicon-plus pull-left" style={{color:"white", padding: "8px 0 8px 8px", fontSize: '18px'}} />
+            </RaisedButton>
+          </div>
+        }
+
         {this.state.sessions.map(session => {
           let editable = (this.state.editingId === session.id) || !session.id;
           if (editable) {
             return (
-              <EditSession isNew={!session.id} 
+              <EditSession isNew={!session.id}
                 session={session.id ? session : store.session.init()}
-                client={this.props.client} 
+                client={this.props.client}
                 onSave={this._save}
                 onCancel={this._cancelSave} />
             );
@@ -79,17 +83,23 @@ let SessionList = React.createClass({
                   titleColor="white"
                   subtitleColor="white"
                   title={moment(session.time).format(window.ft.conf.time.formats.dow)}
-                  subtitle={session.duration + ' min'}
+                  subtitle={session.duration + ' min @ $' + session.amount}
                   showExpandableButton={true}>
                 </CardTitle>
-                <CardActions expandable={true}>
-                  <FlatButton label="Reschedule" primary={true} 
-                    onTouchTap={this._edit.bind(this, session.id)} />
-                  <FlatButton label="Confirm" primary={true}
-                    onTouchTap={this._confirmSession} />
-                  <FlatButton label="Cancel" secondary={true}
-                    onTouchTap={this._cancelSession} />
-                </CardActions>
+                {this.props.readOnly ?
+                  null :
+                  <CardActions expandable={true}>
+                    <FlatButton label="Reschedule" primary={true}
+                      onTouchTap={this._edit.bind(this, session.id)} />
+                    <FlatButton label="Confirm" primary={true}
+                      onTouchTap={this._confirmSession.bind(this, session.id)} />
+                    <FlatButton label="Cancel" secondary={true}
+                      onTouchTap={this._cancelSession} />
+                  </CardActions>
+                }
+                <CardText expandable={true} style={{color: "white"}}>
+                  {session.notes}
+                </CardText>
               </Card>
             );
           }
@@ -123,9 +133,10 @@ let SessionList = React.createClass({
     alert('TODO')
   },
 
-  _confirmSession() {
+  _confirmSession(sessionId) {
     if (confirm('Are you sure?'))
-      alert('TODO')
+      store.session.save({id: sessionId, state: 'completed'},
+        () => { this._refresh(); });
   }
 });
 

@@ -40,15 +40,17 @@ module.exports = {
       time: '2015-09-10 18:00:00',
       state: 'scheduled',
       amount: '50.00',
-      duration: 60
+      duration: 60,
+      notes: 'worked on flexibility and light weight exercises'
     },
     {
       id: 11,
       clientId: 1,
       time: '2015-09-01 18:00:00',
-      state: 'paid',
+      state: 'completed',
       amount: '50.00',
-      duration: 60
+      duration: 60,
+      notes: 'worked on flexibility and light weight exercises'
     },
     {
       id: 12,
