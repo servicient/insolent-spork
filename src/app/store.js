@@ -3,13 +3,14 @@ let store = module.exports = {
   client: {
     where: (obj, cb) => {
       let data = window.ft.mockData.clients;
+      data = _.filter(data, obj);
 
       setTimeout(() => { cb(null, data); }, 500);
     },
 
     first: (obj, cb) => {
       store.client.where(obj, (err, clients) => {
-        cb(null, clients[0]);    
+        cb(null, clients[0]);
       });
     },
 
@@ -43,7 +44,7 @@ let store = module.exports = {
 
     first: (obj, cb) => {
       store.session.where(obj, (err, sessions) => {
-        cb(null, sessions[0]);    
+        cb(null, sessions[0]);
       });
     },
 
@@ -83,7 +84,7 @@ let store = module.exports = {
 
     first: (obj, cb) => {
       store.payment.where(obj, (err, payments) => {
-        cb(null, payments[0]);    
+        cb(null, payments[0]);
       });
     },
 
