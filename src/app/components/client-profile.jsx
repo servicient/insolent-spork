@@ -18,12 +18,12 @@ let {
 let Colors = mui.Styles.Colors;
 
 let ClientProfile = React.createClass({
-  
+
   mixins: [Common],
 
   getInitialState() {
     return {
-      client: null  
+      client: null
     };
   },
 
@@ -44,9 +44,6 @@ let ClientProfile = React.createClass({
     if (this.state.client) /* init render (no client yet) */ {
       return (
         <div>
-          <AppBar title={this.state.client.name} 
-            iconElementLeft={<FontIcon className="material-icons" onTouchTap={this._nav("clients")} style={{fontSize: "30px"}} >navigate_before</FontIcon>}
-            style={{backgroundColor: '#151515'}} />
           <Tabs tabItemContainerStyle={tabsStyle} >
             <Tab label="Sessions">
               <SessionList client={this.state.client} />

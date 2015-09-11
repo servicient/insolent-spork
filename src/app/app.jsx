@@ -3,13 +3,13 @@
   let injectTapEventPlugin = require('react-tap-event-plugin');
   let ClientList = require('./components/client-list');
   let SessionList = require('./components/session-list');
-  let Header = require('./components/header');
   let Sidebar = require('./components/sidebar');
   let ClientProfile = require('./components/client-profile');
   let mockData = require('./mock-data');
   let mui = require('material-ui');
   let {
     AppBar,
+    FontIcon
   } = mui;
 
   let ThemeManager = new mui.Styles.ThemeManager();
@@ -19,11 +19,14 @@
   let Router = require('react-router');
   let { Route, State, DefaultRoute, RouteHandler, Link } = Router;
 
+  let store = require('./store');
+
   //Needed for React Developer Tools
   window.React = React;
 
   // TODO: replace mockdata with api
   window.ft = {
+    defaultTitle: 'FitnessTrainer',
     mockData: mockData,
     conf: {
       time: {
@@ -41,6 +44,14 @@
   injectTapEventPlugin();
 
   let App = React.createClass({
+    mixins: [State],
+
+    getInitialState() {
+      return {
+        title: window.ft.defaultTitle
+      };
+    },
+
     childContextTypes: {
       muiTheme: React.PropTypes.object
     },
@@ -52,20 +63,38 @@
     },
 
     componentWillMount () {
+      this._setTitle();
       ThemeManager.setPalette({
         accent1Color: Colors.blueA400,
       });
       ThemeManager.setTheme(ThemeManager.types.DARK);
     },
 
-    mixins: [State],
+    componentWillReceiveProps() {
+      this._setTitle();
+    },
 
-    render () {
+    _setTitle() {
+      let router = this.context.router,
+        clientId = router.getCurrentParams().id,
+        isClientPath = /client/.test(router.getCurrentPath()),
+        title = window.ft.defaultTitle;
 
-      let title =
-        this.context.router.isActive('clients') ? 'Main' :
-        this.context.router.isActive('clientSessions') ? '' :
-        this.context.router.isActive('clientProfile') ? 'Client Name' : '';
+      if (clientId && isClientPath) {
+        store.client.first({id: +clientId}, (err, client) => {
+          title = client.name;
+          this.setState({title: title});
+        });
+      } else {
+        this.setState({title: title});
+      }
+    },
+
+    render() {
+
+      let backLink = <FontIcon onTouchTap={this.context.router.goBack}
+        className="material-icons"
+        style={{fontSize: 30}}>navigate_before</FontIcon>;
 
       return (
         <div className="main">
