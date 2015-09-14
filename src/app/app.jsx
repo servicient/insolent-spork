@@ -105,7 +105,7 @@
               </div>
               <div className="col-sm-12 col-md-8" style={{padding: 0}} >
                 <AppBar title={this.state.title}
-                    style={{backgroundColor: '#151515', textAlign: 'center'}}
+                    style={{backgroundColor: '#151515'}}
                     showMenuIconButton={false} />
                 <RouteHandler/>
               </div>

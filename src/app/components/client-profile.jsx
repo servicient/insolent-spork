@@ -44,6 +44,12 @@ let ClientProfile = React.createClass({
     if (this.state.client) /* init render (no client yet) */ {
       return (
         <div>
+          <div style={{position:'absolute', top:10, right: 10, color: 'white', textAlign:'center'}}>
+            Balance:
+            <div>
+              <span style={{color:'green', fontSize: '25', fontWeight: '500'}}>$500</span>
+            </div>
+          </div>
           <Tabs tabItemContainerStyle={tabsStyle} onChange={this._tabChange}>
             <Tab label="Scheduled" value="scheduled">
               <SessionList type="scheduled" client={this.state.client} />
